@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Println("hello world")
+	fmt.Println("hello mom")
 	secrete := config.GetSecretes()
 	if secrete == nil {
 		log.Fatal("failed to get secretes")
