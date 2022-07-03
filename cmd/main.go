@@ -28,5 +28,8 @@ func main() {
 	if port != "" {
 		cfg.Server.HTTP.Address = port
 	}
-	ListenAndServe(cfg.Server.HTTP.Address, router)
+	err = ListenAndServe(cfg.Server.HTTP.Address, router)
+	if err != nil {
+		log.Println("application exited with error: ", err)
+	}
 }
