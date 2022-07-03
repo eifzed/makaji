@@ -26,7 +26,7 @@ func main() {
 	router := getRoute(modules)
 	port := os.Getenv("PORT")
 	if port != "" {
-		cfg.Server.HTTP.Address = port
+		cfg.Server.HTTP.Address = ":" + port
 	}
 	err = ListenAndServe(cfg.Server.HTTP.Address, router)
 	if err != nil {
