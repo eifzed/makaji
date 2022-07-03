@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/eifzed/joona/internal/config"
 )
@@ -23,5 +24,9 @@ func main() {
 		Config: cfg,
 	})
 	router := getRoute(modules)
+	port := os.Getenv("PORT")
+	if port != "" {
+		cfg.Server.HTTP.Address = port
+	}
 	ListenAndServe(cfg.Server.HTTP.Address, router)
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"net/http"
 
 	// "github.com/eifzed/joona/lib/utility/urlpath"
@@ -10,6 +11,9 @@ import (
 func getRoute(m *modules) *chi.Mux {
 	router := chi.NewRouter()
 	// path := urlpath.New("")
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "hello world")
+	})
 	router.Route("/v1", func(v1 chi.Router) {
 		v1.Group(func(user chi.Router) {
 			user.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
