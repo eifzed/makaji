@@ -1,0 +1,101 @@
+server:
+  name: "joona"
+  http:
+    address: ":10002"
+  debug: 0
+  url: "http://localhost:10002"
+
+toggle:
+  enable_something: true
+
+environment:
+  is_local: true
+  is_debug: true
+  einhorn_fds: 3
+
+roles:
+  developer: 
+    id: 1
+    name: "Developer"
+  admin: 
+    id: 2
+    name: "Admin"
+  customer:
+    id: 3
+    name: "Customer"
+  pic:
+    id: 4
+    name: "PIC"
+  owner:
+    id: 5
+    name: "Owner"
+  user:
+    id: 6
+    name: "User"
+
+route_roles:
+  "":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 3
+        name: "Customer"
+      - id: 4
+        name: "PIC"
+      - id: 5
+        name: "Owner"
+      - id: 6
+        name: "User"
+
+  "PUT /v1/user/assign/{role}":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 3
+        name: "Customer"
+      - id: 4
+        name: "PIC"
+      - id: 5
+        name: "Owner"
+      - id: 6
+        name: "User"
+
+  "POST /v1/orders":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 3
+        name: "Customer"
+      - id: 4
+        name: "PIC"
+      - id: 5
+        name: "Owner"
+
+  "GET /v1/orders":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 3
+        name: "Customer"
+      - id: 4
+        name: "PIC"
+      - id: 5
+        name: "Owner"
+
+  "POST /v1/shops/register":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 5
+        name: "Owner"
+      
