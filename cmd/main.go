@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -18,13 +17,13 @@ func main() {
 		log.Fatal(err)
 	}
 	cfg.Secrets = secret
-	client, err := getDBConnection(cfg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	db := client.Database("joona-db")
+	// client, err := getDBConnection(cfg)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// db := client.Database("joona-db")
 
-	fmt.Println(db)
+	// fmt.Println(db)
 	modules := newModules(modules{
 		Config: cfg,
 	})
