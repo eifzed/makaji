@@ -27,7 +27,7 @@ type Server struct {
 }
 
 type Config struct {
-	Secretes   *SecreteVault
+	Secrets    *SecretVault
 	Server     *Server                   `yaml:"server"`
 	Toggle     *toggle.Toggle            `yaml:"toggle"`
 	RouteRoles map[string]jwt.RouteRoles `yaml:"route_roles"`

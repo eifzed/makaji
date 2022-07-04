@@ -12,13 +12,10 @@ func getRoute(m *modules) *chi.Mux {
 	router := chi.NewRouter()
 	// path := urlpath.New("")
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "hello world")
+		io.WriteString(w, "hello inud")
 	})
 	router.Route("/v1", func(v1 chi.Router) {
 		v1.Group(func(user chi.Router) {
-			user.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-				w.Write([]byte("ok"))
-			})
 			// path.Group("/user", func(userRoute urlpath.Routes) {
 			// 	user.Post(userRoute.URL("/register"), m.httpHandler.AntreHandler.RegisterNewAccount)
 			// 	user.Post(userRoute.URL("/login"), m.httpHandler.AntreHandler.Login)

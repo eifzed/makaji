@@ -7,18 +7,17 @@ import (
 	"os"
 
 	"github.com/eifzed/joona/lib/common"
-	xdb "github.com/eifzed/joona/lib/database/xorm"
+	"github.com/eifzed/joona/lib/database/mongodb"
 	"github.com/eifzed/joona/lib/utility/jwt"
 )
 
-type SecreteVault struct {
+type SecretVault struct {
 	Data     *DataVault `json:"data"`
 	Metadata *Metadata  `json:"metadata"`
 }
 
 type DataVault struct {
-	DBMaster       *xdb.Config         `json:"db_master"`
-	DBSlave        *xdb.Config         `json:"db_slave"`
+	MongoDBConfig  *mongodb.Config     `json:"mongo_db_config"`
 	JWTCertificate *jwt.JWTCertificate `json:"jwt_certificate"`
 }
 
@@ -29,7 +28,7 @@ type Metadata struct {
 	DeletionTime string  `json:"deletion_time"`
 }
 
-func GetSecretes() *SecreteVault {
+func GetSecrets() *SecretVault {
 	env := "production"
 	vaultPath := "/etc/joona-secret/"
 
@@ -47,16 +46,13 @@ func GetSecretes() *SecreteVault {
 	if err != nil {
 		log.Fatalln("Path fault not found:", err)
 	}
-	cfgVault := &SecreteVault{}
-	err = json.Unmarshal(configByte, cfgVault)
+	cfgVault := SecretVault{}
+	err = json.Unmarshal(configByte, &cfgVault)
 	if err != nil {
 		log.Fatalln("Failed get vault config:", err)
-	}
-	if cfgVault == nil {
-		log.Fatalln("Failed config vault nil")
 	}
 	if cfgVault.Data == nil {
 		log.Fatalln("Failed config vault nil on data")
 	}
-	return cfgVault
+	return &cfgVault
 }

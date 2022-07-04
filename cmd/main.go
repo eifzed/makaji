@@ -9,17 +9,22 @@ import (
 )
 
 func main() {
-	fmt.Println("hello mom")
-	secrete := config.GetSecretes()
-	if secrete == nil {
-		log.Fatal("failed to get secretes")
-		return
+	secret := config.GetSecrets()
+	if secret == nil {
+		log.Fatal("failed to get secrets")
 	}
 	cfg, err := config.GetConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
-	cfg.Secretes = secrete
+	cfg.Secrets = secret
+	client, err := getDBConnection(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db := client.Database("joona-db")
+
+	fmt.Println(db)
 	modules := newModules(modules{
 		Config: cfg,
 	})
