@@ -14,24 +14,10 @@ environment:
   einhorn_fds: 3
 
 roles:
-  developer: 
-    id: 1
-    name: "Developer"
-  admin: 
-    id: 2
-    name: "Admin"
-  customer:
-    id: 3
-    name: "Customer"
-  pic:
-    id: 4
-    name: "PIC"
-  owner:
-    id: 5
-    name: "Owner"
-  user:
-    id: 6
-    name: "User"
+  developer: 1
+  admin: 2
+  user: 3
+  public: 999999
 
 route_roles:
   "":
@@ -49,53 +35,9 @@ route_roles:
       - id: 6
         name: "User"
 
-  "PUT /v1/user/assign/{role}":
+  "POST /v1/users/register":
     roles:
-      - id: 1
-        name: "Developer"
-      - id: 2
-        name: "Admin"
-      - id: 3
-        name: "Customer"
-      - id: 4
-        name: "PIC"
-      - id: 5
-        name: "Owner"
-      - id: 6
-        name: "User"
+      - id: 999999
+        name: "Public"
 
-  "POST /v1/orders":
-    roles:
-      - id: 1
-        name: "Developer"
-      - id: 2
-        name: "Admin"
-      - id: 3
-        name: "Customer"
-      - id: 4
-        name: "PIC"
-      - id: 5
-        name: "Owner"
-
-  "GET /v1/orders":
-    roles:
-      - id: 1
-        name: "Developer"
-      - id: 2
-        name: "Admin"
-      - id: 3
-        name: "Customer"
-      - id: 4
-        name: "PIC"
-      - id: 5
-        name: "Owner"
-
-  "POST /v1/shops/register":
-    roles:
-      - id: 1
-        name: "Developer"
-      - id: 2
-        name: "Admin"
-      - id: 5
-        name: "Owner"
       

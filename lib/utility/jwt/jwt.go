@@ -13,6 +13,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/eifzed/joona/internal/entity/users"
 )
 
 type JWTCertificate struct {
@@ -21,20 +23,14 @@ type JWTCertificate struct {
 }
 
 type RouteRoles struct {
-	Roles []Role `yaml:"roles"`
-}
-
-type Role struct {
-	ID   int64  `yaml:"id" json:"id" xorm:"role_id"`
-	Name string `yaml:"name" json:"name" xorm:"role_name"`
+	Roles []users.UserRole `yaml:"roles"`
 }
 
 type JWTPayload struct {
-	UserID         int64
-	Name           string
+	UserID         string
 	Email          string
 	Username       string
-	Roles          []Role
+	Roles          []users.UserRole
 	PasswordHashed string
 	GeneratedUnix  int64
 	ExpiredUnix    int64

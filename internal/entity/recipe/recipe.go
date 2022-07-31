@@ -36,8 +36,13 @@ type Recipe struct {
 	Difficulty        string
 	Tags              []string
 	Tools             []string
-	Ingredients       []RecipeIngredient
+	IngredientGroup   []IngredientGroup
 	Steps             []CookingStep
+}
+
+type IngredientGroup struct {
+	GroupName   string
+	Ingredients []RecipeIngredient
 }
 
 type CookingStep struct {

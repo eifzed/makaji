@@ -6,16 +6,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type recipeDB struct {
+type recipeConn struct {
 	DB *mongo.Database
 }
 
-type OrderDBOption struct {
+type RecipeDBOption struct {
 	DB *mongo.Database
 }
 
-func GetNewOrderDB(option *OrderDBOption) (recipeDB, error) {
-	db := recipeDB{}
+func GetRecipeDB(option *RecipeDBOption) (recipeConn, error) {
+	db := recipeConn{}
 	if option == nil || option.DB == nil {
 		return db, errors.New("no DB config")
 	}
