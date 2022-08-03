@@ -20,7 +20,7 @@ func getRoute(m *modules) *chi.Mux {
 			users.Use(m.AuthModule.AuthHandler)
 			path.Group("/users", func(usersRoute urlpath.Routes) {
 				users.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
-				users.Post(usersRoute.URL("/Login"), m.httpHandler.UsersHandler.RegisterNewAccount)
+				users.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
 			})
 		})
 		// 	path.Group("/shops", func(shopsRoute urlpath.Routes) {

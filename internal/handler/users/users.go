@@ -16,6 +16,10 @@ func (h *UsersHandler) RegisterNewAccount(w http.ResponseWriter, r *http.Request
 		commonwriterRespondError(ctx, w, err)
 		return
 	}
+	if err := registerData.ValidateInput(); err != nil {
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
 
 	auth, err := h.UsersUC.RegisterNewUser(ctx, registerData)
 	if err != nil {

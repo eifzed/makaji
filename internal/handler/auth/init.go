@@ -50,28 +50,26 @@ func (m *AuthModule) AuthHandler(next http.Handler) http.Handler {
 		}
 		route := fmt.Sprintf("%s %s", rCtx.RouteMethod, rCtx.RoutePattern())
 		roles := m.RouteRoles[route].Roles
-		if isPublicRoute(roles, m.Cfg.Roles.Public) {
-			next.ServeHTTP(rw, r)
-			return
-		}
 
-		bearerToken := r.Header.Get("Authorization")
-		jwtToken, err := GetBearerToken(bearerToken)
-		if err != nil {
-			authHandlerError(ctx, rw, r, err)
-			return
-		}
-		userPayload, err := jwt.DecodeToken(jwtToken, m.JWTCertificate.PublicKey)
-		if err != nil {
-			authHandlerError(ctx, rw, r, err)
-			return
-		}
+		if !isPublicRoute(roles, m.Cfg.Roles.Public) {
+			bearerToken := r.Header.Get("Authorization")
+			jwtToken, err := GetBearerToken(bearerToken)
+			if err != nil {
+				authHandlerError(ctx, rw, r, err)
+				return
+			}
+			userPayload, err := jwt.DecodeToken(jwtToken, m.JWTCertificate.PublicKey)
+			if err != nil {
+				authHandlerError(ctx, rw, r, err)
+				return
+			}
 
-		if !isUserAuthorized(userPayload.Roles, m.RouteRoles[route].Roles) {
-			authHandlerError(ctx, rw, r, jwt.ErrForbidden)
-			return
+			if !isUserAuthorized(userPayload.Roles, m.RouteRoles[route].Roles) {
+				authHandlerError(ctx, rw, r, jwt.ErrForbidden)
+				return
+			}
+			ctx = m.SetKeyValueToContext(ctx, userContextKey, userPayload)
 		}
-		ctx = m.SetKeyValueToContext(ctx, userContextKey, userPayload)
 
 		r = r.WithContext(ctx)
 		next.ServeHTTP(rw, r)

@@ -123,6 +123,6 @@ func RespondDefaultError(ctx context.Context, w http.ResponseWriter, errValue er
 }
 
 func SetErrorFormat(ctx context.Context, w http.ResponseWriter, errorCode int, errMessage *commonerr.ErrorMessage) error {
-	sendResponseJSONError(w, nil, errorCode, errMessage)
-	return nil
+	_, err := sendResponseJSONError(w, nil, errorCode, errMessage)
+	return err
 }

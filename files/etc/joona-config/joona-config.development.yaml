@@ -40,4 +40,9 @@ route_roles:
       - id: 999999
         name: "Public"
 
+  "POST /v1/users/login":
+    roles:
+      - id: 999999
+        name: "Public"
+
       

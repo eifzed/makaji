@@ -37,10 +37,12 @@ func main() {
 	}
 	tx := transactions.GetNewMongoDBTransaction(&transactions.Options{
 		Client: client,
+		DBName: "joona-db",
 	})
 	usersUC := usersUsecase.GetNewUsersUC(&usersUsecase.Options{
 		UsersDB: &usersDB,
 		TX:      tx,
+		Config:  cfg,
 	})
 	usersHadler := usersHttpHandler.NewUsersHandler(&usersHttpHandler.UsersHandler{
 		UsersUC: usersUC,

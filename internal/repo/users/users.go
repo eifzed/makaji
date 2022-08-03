@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/eifzed/joona/internal/entity/users"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -51,7 +52,7 @@ func (conn *UsersDB) InsertUser(ctx context.Context, userDetail *users.UserDetai
 		if err != nil {
 			return err
 		}
-		userDetail.UserID = result.InsertedID.(string)
+		userDetail.UserID = result.InsertedID.(primitive.ObjectID).Hex()
 		return nil
 	})
 	if err != nil {
