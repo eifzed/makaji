@@ -1,4 +1,4 @@
-package recipe
+package recipes
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 

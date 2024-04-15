@@ -1,9 +1,9 @@
 server:
   name: "joona"
   http:
-    address: ":10002"
-  debug: 0
-  url: "http://localhost:10002"
+    address: ":10004"
+  debug: 1
+  url: "http://localhost:10004"
 
 toggle:
   enable_something: true
@@ -41,6 +41,11 @@ route_roles:
         name: "Public"
 
   "POST /v1/users/login":
+    roles:
+      - id: 999999
+        name: "Public"
+
+  "POST /v1/ingredients":
     roles:
       - id: 999999
         name: "Public"

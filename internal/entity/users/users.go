@@ -40,7 +40,6 @@ func (s *UserRegistration) ValidateInput() error {
 }
 
 func (s *UserRegistration) CheckIsValidPassword() bool {
-	letters := 0
 	var number, upper, special, sevenOrMore bool
 	for _, c := range s.Password {
 		switch {
@@ -48,16 +47,14 @@ func (s *UserRegistration) CheckIsValidPassword() bool {
 			number = true
 		case unicode.IsUpper(c):
 			upper = true
-			letters++
 		case unicode.IsPunct(c) || unicode.IsSymbol(c):
 			special = true
 		case unicode.IsLetter(c) || c == ' ':
-			letters++
 		default:
 			return false
 		}
 	}
-	sevenOrMore = letters >= 7
+	sevenOrMore = len(s.Password) >= 7
 	return number && upper && special && sevenOrMore
 }
 

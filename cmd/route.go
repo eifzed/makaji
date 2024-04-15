@@ -16,25 +16,24 @@ func getRoute(m *modules) *chi.Mux {
 		io.WriteString(w, "hello inud")
 	})
 	router.Route("/v1", func(v1 chi.Router) {
-		v1.Group(func(users chi.Router) {
-			users.Use(m.AuthModule.AuthHandler)
+		v1.Group(func(noAuthRoute chi.Router) {
 			path.Group("/users", func(usersRoute urlpath.Routes) {
-				users.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
-				users.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
+				noAuthRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
 			})
 		})
-		// 	path.Group("/shops", func(shopsRoute urlpath.Routes) {
-		// 		antre.Post(shopsRoute.URL("/register"), m.httpHandler.OrderHandler.RegisterShop)
-		// 		path.Group("/products", func(shopProductRoute urlpath.Routes) {
-		// 			antre.Get(shopProductRoute.URL("/{shopID}"), m.httpHandler.OrderHandler.GetCustomerOrders)
-		// 		})
-		// 	})
-		// 	path.Group("/orders", func(orderRoute urlpath.Routes) {
-		// 		antre.Post(orderRoute.URL(""), m.httpHandler.OrderHandler.RegisterOrder)
-		// 		antre.Get(orderRoute.URL(""), m.httpHandler.OrderHandler.GetCustomerOrders)
-		// 		antre.Get(orderRoute.URL("/{id}"), m.httpHandler.OrderHandler.GetOrderByID)
-		// 	})
-		// })
+
+		v1.Group(func(authRoute chi.Router) {
+			authRoute.Use(m.AuthModule.AuthHandler)
+			path.Group("/users", func(usersRoute urlpath.Routes) {
+				authRoute.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
+			})
+
+			path.Group("/ingredients", func(ingredientsRoute urlpath.Routes) {
+				authRoute.Post(ingredientsRoute.URL("/"), m.httpHandler.RecipesHandler.RegisterIngredients)
+				authRoute.Get(ingredientsRoute.URL("/"), m.httpHandler.RecipesHandler.GetIngredients)
+			})
+
+		})
 
 	})
 
