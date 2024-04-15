@@ -1,13 +1,13 @@
-package recipe
+package recipes
 
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/recipe"
+	"github.com/eifzed/joona/internal/entity/recipes"
 	"gopkg.in/mgo.v2/bson"
 )
 
-func (db *recipeConn) GetRecipe(ctx context.Context, filter recipe.GetRecipeFilter) (*recipe.Recipe, error) {
+func (db *recipesConn) GetRecipes(ctx context.Context, filter recipes.GetRecipeFilter) (*recipes.Recipe, error) {
 	aggPipeline := []bson.M{}
 	if !filter.ID.IsZero() {
 		aggPipeline = append(aggPipeline, bson.M{"$match": bson.M{"_id": filter.ID}})
