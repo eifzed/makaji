@@ -20,7 +20,7 @@ type GetIngredientsRequest struct {
 }
 
 type GenericFilterParams struct {
-	Keyword string `json:"keyword"`
-	Limit   uint32 `json:"limit"`
-	Page    uint32 `json:"page"`
+	Keyword string `json:"keyword" schema:"keyword"`
+	Limit   uint32 `json:"limit" schema:"limit"`
+	Page    uint32 `json:"page" schema:"page"`
 }

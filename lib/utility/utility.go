@@ -1,7 +1,9 @@
 package utility
 
 import (
+	"net/http"
 	"reflect"
+	"strings"
 )
 
 func StringExistInSlice(item string, itemSlice []string) bool {
@@ -61,4 +63,21 @@ func ConvertSliceToSliceOfInterface(slice interface{}) []interface{} {
 	}
 
 	return interfaceSlice
+}
+
+func CheckIsPhotoURLPublic(photoURL string) (bool, error) {
+	resp, err := http.Head(photoURL)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		contentType := resp.Header.Get("Content-Type")
+		if strings.HasPrefix(contentType, "image/") {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }
