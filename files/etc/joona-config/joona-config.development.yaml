@@ -49,5 +49,20 @@ route_roles:
     roles:
       - id: 999999
         name: "Public"
+  
+  "GET /v1/ingredients":
+    roles:
+      - id: 999999
+        name: "Public"
+  
+  "POST /v1/recipes":
+    roles:
+      - id: 999999
+        name: "Public"
+
+  "GET /v1/recipes":
+    roles:
+      - id: 999999
+        name: "Public"
 
       

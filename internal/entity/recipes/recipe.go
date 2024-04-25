@@ -1,66 +1,72 @@
 package recipes
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"github.com/volatiletech/null/v8"
+)
 
-type GetRecipeFilter struct {
-	ID         primitive.ObjectID
-	Name       string
-	Limit      int64
-	Page       int64
-	Tag        string
-	Difficulty string
-	Calorie    *CalorieFilter
-	Price      *PriceFilter
+type GetRecipeParams struct {
+	GenericFilterParams
+	ID         string `schema:"id"`
+	Difficulty string `schema:"difficulty"`
+	CalorieMin int64  `schema:"calorie_min"`
+	CalorieMax int64  `schema:"calorie_max"`
+	PriceMin   int64  `schema:"price_min"`
+	PriceMax   int64  `schema:"price_max"`
 }
 
-type PriceFilter struct {
-	MinPrice     int64
-	MaxPrice     int64
-	IsDescending bool
-}
+type Difficulty string
 
-type CalorieFilter struct {
-	MinCalorie   int64
-	MaxCalorie   int64
-	IsDescending bool
-}
+const (
+	Easy   Difficulty = "easy"
+	Medium Difficulty = "medium"
+	Hard   Difficulty = "hard"
+)
 
 type Recipe struct {
-	ID                primitive.ObjectID
-	Name              string
-	ImageURL          string
-	PriceEstimation   int64
-	CountryOrigin     string
-	TimeToCookMinutes int64
-	CalorieCount      int64
-	Difficulty        string
-	Tags              []string
-	Tools             []string
-	IngredientGroup   []IngredientGroup
-	Steps             []CookingStep
+	ID          string `json:"id" bson:"_id,omitempty"`
+	Name        string `json:"name" bson:"name"`
+	Description string `json:"description" bson:"descriptions"`
+	// ImageURLs         []string           `json:"image_urls" bson:"image_urls"`
+	Content           string             `json:"content" bson:"content"`
+	PriceEstimation   int64              `json:"price_estimation" bson:"price_estimation"`
+	CountryOrigin     string             `json:"country_origin" bson:"country_origin"`
+	TimeToCookMinutes int64              `json:"time_to_cook_minutes" bson:"time_to_cook_minutes"`
+	CalorieCount      int64              `json:"calorie_count" bson:"calorie_count"`
+	Difficulty        Difficulty         `json:"difficulty" bson:"difficulty"`
+	Tags              []string           `json:"tags" bson:"tags"`
+	Tools             []string           `json:"tools" bson:"tools"`
+	Ingredients       []RecipeIngredient `json:"ingredients" bson:"ingredients"`
+	Steps             []StepGroup        `json:"steps" bson:"steps"`
+}
+
+func (r *Recipe) ValidateInput() error {
+	// TODO
+	return nil
 }
 
 type IngredientGroup struct {
-	GroupName   string
-	Ingredients []RecipeIngredient
+	GroupName   string             `json:"group_name" bson:"-"`
+	Ingredients []RecipeIngredient `json:"ingredients" bson:"-"`
+}
+
+type StepGroup struct {
+	Title   string        `json:"title" bson:"title"`
+	Content string        `json:"content" bson:"content"`
+	Steps   []CookingStep `json:"steps" bson:"steps"`
 }
 
 type CookingStep struct {
-	StepNumber  int64
-	Title       string
-	Description string
-	ImageURL    string
+	Title   string `json:"title" bson:"title"`
+	Content string `json:"content" bson:"content"`
 }
 
 type RecipeIngredient struct {
-	Ingredient  Ingredient
-	Total       int64
-	Unit        string
-	Alternative *AlternativeIngredient
+	IngredientID    string      `json:"ingredient_id"`
+	Total           uint32      `json:"total"`
+	Unit            string      `json:"unit"`
+	AltIngredientID null.String `json:"alt_ingredient_id,omitempty"`
 }
 
-type AlternativeIngredient struct {
-	Ingredient Ingredient
-	Total      int64
-	Unit       string
+type GenericPostResponse struct {
+	ID string `json:"id"`
 }

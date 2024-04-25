@@ -33,6 +33,11 @@ func getRoute(m *modules) *chi.Mux {
 				authRoute.Get(ingredientsRoute.URL("/"), m.httpHandler.RecipesHandler.GetIngredients)
 			})
 
+			path.Group("/recipes", func(recipesRoute urlpath.Routes) {
+				authRoute.Post(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.CreateRecipe)
+				authRoute.Get(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.GetRecipes)
+			})
+
 		})
 
 	})
