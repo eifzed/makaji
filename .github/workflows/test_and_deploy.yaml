@@ -1,0 +1,36 @@
+name: Unit Test and Deploy
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.18'
+      
+      - name: Build
+        run: go build -o joona ./cmd/
+
+      - name: Run Unit Tests
+        run: go test ./...
+
+      - name: Deploy to Azure
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USERNAME }}
+          key: ${{ secrets.AZURE_SSH }}
+          script: |
+            sudo systemctl stop joona.service
+            scp ./joona ${{ secrets.AZURE_USERNAME }}@${{ secrets.AZURE_HOST }}:/usr/bin/joona
+            sudo systemctl start joona.service
