@@ -1,27 +1,96 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/eifzed/joona/internal/config"
+	"github.com/eifzed/joona/internal/entity/handler/http"
+	"github.com/eifzed/joona/internal/handler/auth"
+	recipesHttpHandler "github.com/eifzed/joona/internal/handler/recipes"
+	usersHttpHandler "github.com/eifzed/joona/internal/handler/users"
+	"github.com/eifzed/joona/internal/repo/recipes"
+	"github.com/eifzed/joona/internal/repo/users"
+	recipesUsecase "github.com/eifzed/joona/internal/usecase/recipes"
+	usersUsecase "github.com/eifzed/joona/internal/usecase/users"
+	"github.com/eifzed/joona/lib/database/mongodb/transactions"
 )
 
 func main() {
-	fmt.Println("hello world")
-	secrete := config.GetSecretes()
-	if secrete == nil {
-		log.Fatal("failed to get secretes")
-		return
+	secret := config.GetSecrets()
+	if secret == nil {
+		log.Fatal("failed to get secrets")
 	}
 	cfg, err := config.GetConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
-	cfg.Secretes = secrete
+	cfg.Secrets = secret
+	client, err := getDBConnection(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db := client.Database("joona-db")
+
+	usersDB, err := users.GetUsersDB(&users.UsersDBOption{
+		DB: db,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	recipesDB, err := recipes.GetRecipesDB(&recipes.RecipesDBOption{
+		DB: db,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx := transactions.GetNewMongoDBTransaction(&transactions.Options{
+		Client: client,
+		DBName: "joona-db",
+	})
+	usersUC := usersUsecase.GetNewUsersUC(&usersUsecase.Options{
+		UsersDB: &usersDB,
+		TX:      tx,
+		Config:  cfg,
+	})
+
+	recipesUC := recipesUsecase.GetNewRecipesUC(&recipesUsecase.Options{
+		UsersDB:   &usersDB,
+		Config:    cfg,
+		TX:        tx,
+		RecipesDB: &recipesDB,
+	})
+
+	usersHadler := usersHttpHandler.NewUsersHandler(&usersHttpHandler.UsersHandler{
+		UsersUC: usersUC,
+		Config:  cfg,
+	})
+
+	recipesHandler := recipesHttpHandler.NewRecipesHandler(&recipesHttpHandler.RecipesHandler{
+		RecipesUC: recipesUC,
+		Config:    cfg,
+	})
+
+	authModule := auth.NewAuthModule(&auth.AuthModule{
+		JWTCertificate: cfg.Secrets.Data.JWTCertificate,
+		RouteRoles:     cfg.RouteRoles,
+		Cfg:            cfg,
+	})
 	modules := newModules(modules{
 		Config: cfg,
+		httpHandler: &http.HttpHandler{
+			UsersHandler:   usersHadler,
+			RecipesHandler: recipesHandler,
+		},
+		AuthModule: authModule,
 	})
 	router := getRoute(modules)
-	ListenAndServe(cfg.Server.HTTP.Address, router)
+	port := os.Getenv("PORT")
+	if port != "" {
+		cfg.Server.HTTP.Address = ":" + port
+	}
+	err = ListenAndServe(cfg.Server.HTTP.Address, router)
+	if err != nil {
+		log.Println("application exited with error: ", err)
+	}
 }

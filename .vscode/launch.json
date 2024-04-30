@@ -9,7 +9,7 @@
       "program": "${workspaceFolder}/cmd",
       "cwd": "${workspaceFolder}",
       "env": {
-        "ISLOCAL": 1,
+        "ISLOCAL": "1",
         "GO111MODULE": "auto"
       },
       "args": []

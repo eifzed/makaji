@@ -2,13 +2,14 @@ package main
 
 import (
 	"github.com/eifzed/joona/internal/config"
-	// "github.com/eifzed/antre-app/internal/handler"
+	"github.com/eifzed/joona/internal/entity/handler/auth"
+	"github.com/eifzed/joona/internal/entity/handler/http"
 )
 
 type modules struct {
-	// httpHandler *handler.HttpHandler
-	Config *config.Config
-	// AuthModule  handler.AuthModuleInterface
+	httpHandler *http.HttpHandler
+	Config      *config.Config
+	AuthModule  auth.AuthModuleInterface
 	// LogModule   handler.LogModuleInterface
 }
 

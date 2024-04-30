@@ -27,7 +27,7 @@ type Server struct {
 }
 
 type Config struct {
-	Secretes   *SecreteVault
+	Secrets    *SecretVault
 	Server     *Server                   `yaml:"server"`
 	Toggle     *toggle.Toggle            `yaml:"toggle"`
 	RouteRoles map[string]jwt.RouteRoles `yaml:"route_roles"`
@@ -35,12 +35,13 @@ type Config struct {
 }
 
 type Roles struct {
-	Developer jwt.Role `yaml:"developer"`
-	Admin     jwt.Role `yaml:"admin"`
-	Customer  jwt.Role `yaml:"customer"`
-	PIC       jwt.Role `yaml:"pic"`
-	Owner     jwt.Role `yaml:"owner"`
-	User      jwt.Role `yaml:"user"`
+	Developer int64 `yaml:"developer"`
+	Admin     int64 `yaml:"admin"`
+	Customer  int64 `yaml:"customer"`
+	PIC       int64 `yaml:"pic"`
+	Owner     int64 `yaml:"owner"`
+	User      int64 `yaml:"user"`
+	Public    int64 `yaml:"public"`
 }
 
 func GetConfig() (*Config, error) {

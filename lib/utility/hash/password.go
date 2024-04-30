@@ -3,14 +3,10 @@ package hash
 import (
 	"unicode"
 
-	"github.com/eifzed/joona/lib/common/commonerr"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func HashPassword(password string) (string, error) {
-	if verifyPassword(password) {
-		return "", commonerr.ErrorBadRequest("Password", "Password must be at least 7 characters, with at least one uppercase, one special character, and one number")
-	}
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
