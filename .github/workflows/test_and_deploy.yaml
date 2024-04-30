@@ -31,9 +31,10 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           key: ${{ secrets.AZURE_SSH }}
           script: |
+            set -e
             cd /home/eifzed/joona
             git pull
-            go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
+            /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
             cp ./joona /usr/bin
             cp -R ./files/etc/* /etc/apollo/
             systemctl restart joona.service
