@@ -22,27 +22,15 @@ jobs:
         run: go build -o joona ./cmd/
 
       - name: Run Unit Tests
-        run: |
-          go test ./...
-          if [ $? -eq 0 ]; then
-            echo "Unit tests passed"
-            echo "::set-output name=status::success"
-          else
-            echo "Unit tests failed"
-            echo "::set-output name=status::failure"
-          fi
-          
-      - name: Set status
-        id: set-status
-        uses: actions/github-script@v4
+        run: go test ./...
+
+      - name: Deploy to Azure
+        uses: appleboy/ssh-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USERNAME }}
+          key: ${{ secrets.AZURE_SSH }}
           script: |
-            const status = '${{ steps.test.outputs.status }}';
-            github.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: status === 'success' ? 'success' : 'failure',
-              context: 'Unit Test'
-            });
+            sudo systemctl stop joona.service
+            scp ./joona ${{ secrets.AZURE_USERNAME }}@${{ secrets.AZURE_HOST }}:/usr/bin/joona
+            sudo systemctl start joona.service
