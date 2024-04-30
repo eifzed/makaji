@@ -16,6 +16,8 @@ import (
 	"github.com/eifzed/joona/lib/database/mongodb/transactions"
 )
 
+var CommitHash string
+
 func main() {
 	secret := config.GetSecrets()
 	if secret == nil {
