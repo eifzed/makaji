@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 
@@ -16,7 +17,7 @@ func getRoute(m *modules) *chi.Mux {
 		io.WriteString(w, "hello inud")
 	})
 	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hellooo"))
+		w.Write([]byte(fmt.Sprintf("{\"CommitHash\": \"%s\"}", CommitHash)))
 	})
 	router.Route("/v1", func(v1 chi.Router) {
 		v1.Group(func(noAuthRoute chi.Router) {

@@ -33,7 +33,7 @@ jobs:
           script: |
             cd /home/eifzed/joona
             git pull
-            go build -o joona ./cmd/
+            go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
             cp ./joona /usr/bin
             cp -R ./files/etc/* /etc/
             sudo systemctl restart joona.service
