@@ -15,6 +15,9 @@ func getRoute(m *modules) *chi.Mux {
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "hello inud")
 	})
+	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("hellooo"))
+	})
 	router.Route("/v1", func(v1 chi.Router) {
 		v1.Group(func(noAuthRoute chi.Router) {
 			path.Group("/users", func(usersRoute urlpath.Routes) {
