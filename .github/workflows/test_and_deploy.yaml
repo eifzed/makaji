@@ -31,6 +31,9 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           key: ${{ secrets.AZURE_SSH }}
           script: |
-            sudo systemctl stop joona.service
-            scp ./joona ${{ secrets.AZURE_USERNAME }}@${{ secrets.AZURE_HOST }}:/usr/bin
-            sudo systemctl start joona.service
+            cd /home/eifzed/joona
+            git pull
+            go build -o joona ./cmd/
+            cp ./joona /usr/bin
+            cp -R ./files/etc/* /etc/
+            sudo systemctl restart joona.service
