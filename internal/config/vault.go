@@ -30,7 +30,7 @@ type Metadata struct {
 
 func GetSecrets() *SecretVault {
 	env := "production"
-	vaultPath := "/etc/joona-secret/"
+	vaultPath := "/etc/apollo/joona-secret/"
 
 	if common.IsDevelopment() {
 		dir, _ := os.Getwd()
