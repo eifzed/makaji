@@ -34,8 +34,9 @@ jobs:
             set -e
             cd /home/eifzed/joona
             git pull
+            git checkout origin/release
             /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
-            systemctl stop joona.service
+            sudo systemctl stop joona.service
             cp ./joona /usr/bin
             cp -R ./files/etc/* /etc/apollo/
-            systemctl start joona.service
+            sudo systemctl start joona.service
