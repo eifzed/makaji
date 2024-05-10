@@ -19,6 +19,12 @@ type SecretVault struct {
 type DataVault struct {
 	MongoDBConfig  *mongodb.Config     `json:"mongo_db_config"`
 	JWTCertificate *jwt.JWTCertificate `json:"jwt_certificate"`
+	Elasticsearch  *Elasticsearch      `json:"elasticsearch"`
+}
+
+type Elasticsearch struct {
+	APIKey  string `json:"api_key"`
+	CloudID string `json:"cloud_id"`
 }
 
 type Metadata struct {
@@ -30,7 +36,7 @@ type Metadata struct {
 
 func GetSecrets() *SecretVault {
 	env := "production"
-	vaultPath := "/etc/apollo/joona-secret/"
+	vaultPath := "/etc/joona-secret/"
 
 	if common.IsDevelopment() {
 		dir, _ := os.Getwd()

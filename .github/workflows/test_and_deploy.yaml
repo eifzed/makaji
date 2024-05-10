@@ -16,7 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.18'
+          go-version: '1.21'
       
       - name: Build
         run: go build -o joona ./cmd/
@@ -33,8 +33,8 @@ jobs:
           script: |
             set -e
             cd /home/eifzed/joona
-            git pull origin release
             git checkout release
+            git pull
             /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
             sudo systemctl stop joona.service
             cp ./joona /usr/bin

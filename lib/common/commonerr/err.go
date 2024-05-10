@@ -59,3 +59,7 @@ func (errorMessage *ErrorMessage) GetCode() int {
 func ErrorNotFound(context string) *ErrorMessage {
 	return NewError(http.StatusNotFound, context, context+" not found")
 }
+
+var (
+	InvalidObjectID = ErrorBadRequest("id", "invalid id")
+)

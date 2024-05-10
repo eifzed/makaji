@@ -9,6 +9,7 @@ import (
 	"github.com/eifzed/joona/internal/handler/auth"
 	recipesHttpHandler "github.com/eifzed/joona/internal/handler/recipes"
 	usersHttpHandler "github.com/eifzed/joona/internal/handler/users"
+	"github.com/eifzed/joona/internal/repo/elasticsearch"
 	"github.com/eifzed/joona/internal/repo/recipes"
 	"github.com/eifzed/joona/internal/repo/users"
 	recipesUsecase "github.com/eifzed/joona/internal/usecase/recipes"
@@ -50,6 +51,18 @@ func main() {
 		Client: client,
 		DBName: "joona-db",
 	})
+
+	// elasaticsearch
+	esClient, err := elasticsearch.New(elasticsearch.Option{
+		CloudID: cfg.Secrets.Data.Elasticsearch.CloudID,
+		APIKey:  cfg.Secrets.Data.Elasticsearch.APIKey,
+		Config:  cfg,
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	usersUC := usersUsecase.GetNewUsersUC(&usersUsecase.Options{
 		UsersDB: &usersDB,
 		TX:      tx,
@@ -61,6 +74,7 @@ func main() {
 		Config:    cfg,
 		TX:        tx,
 		RecipesDB: &recipesDB,
+		Elastic:   esClient,
 	})
 
 	usersHadler := usersHttpHandler.NewUsersHandler(&usersHttpHandler.UsersHandler{

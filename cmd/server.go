@@ -10,16 +10,15 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
-	"time"
 
 	"github.com/go-chi/chi"
 )
 
 func ListenAndServe(port string, router *chi.Mux) error {
 	srv := http.Server{
-		ReadTimeout:  10 * time.Second, // TODO: read it from config
-		WriteTimeout: 3 * time.Second,  // TODO: read it from config
-		Handler:      router,
+		// ReadTimeout:  10 * time.Second, // TODO: read it from config
+		// WriteTimeout: 3 * time.Second,  // TODO: read it from config
+		Handler: router,
 	}
 	listener, err := GetListener(port)
 	if err != nil {
