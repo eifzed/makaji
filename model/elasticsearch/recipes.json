@@ -1,0 +1,71 @@
+{
+    "settings": {
+      "analysis": {
+        "analyzer": {
+          "custom_text_analyzer": {
+            "type": "custom",
+            "tokenizer": "standard",
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "char_filter": [
+              "html_strip"
+            ]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "properties": {
+        "name": {
+          "type": "text",
+          "analyzer": "custom_text_analyzer",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "custom_text_analyzer"
+        },
+        "price_estimation": {
+          "type": "integer"
+        },
+        "country_origin": {
+          "type": "keyword"
+        },
+        "time_to_cook_minutes": {
+          "type": "integer"
+        },
+        "calorie_count": {
+          "type": "integer"
+        },
+        "difficulty": {
+          "type": "keyword"
+        },
+        "tags": {
+          "type": "keyword"
+        },
+        "tools": {
+          "type": "keyword"
+        },
+        "creator_name": {
+          "type": "text",
+          "analyzer": "custom_text_analyzer",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "creator_username": {
+          "type": "keyword"
+        }
+      }
+    }
+  }

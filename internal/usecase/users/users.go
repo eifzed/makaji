@@ -40,6 +40,7 @@ func (uc *usersUC) RegisterNewUser(ctx context.Context, userDetail users.UserReg
 		Username: userDetail.Username,
 		Email:    userDetail.Email,
 		Password: passwordHashed,
+		FullName: userDetail.FullName,
 	}
 	err = uc.UsersDB.InsertUser(ctx, &userData)
 	if err != nil {
@@ -58,6 +59,8 @@ func (uc *usersUC) getUserAuth(userData users.UserDetail) (*users.UserAuth, erro
 		UserID:         userData.UserID,
 		Email:          userData.Email,
 		PasswordHashed: userData.Password,
+		FullName:       userData.Email,
+		Username:       userData.Username,
 	}
 	token, err := jwt.GenerateToken(userPayload, uc.Config.Secrets.Data.JWTCertificate.PrivateKey, constant.MinutesInOneDay)
 	if err != nil {

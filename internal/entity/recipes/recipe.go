@@ -37,6 +37,9 @@ type Recipe struct {
 	Tools             []string           `json:"tools" bson:"tools"`
 	Ingredients       []RecipeIngredient `json:"ingredients" bson:"ingredients"`
 	Steps             []StepGroup        `json:"steps" bson:"steps"`
+	CreatorName       string             `json:"creator_name"`
+	CreatorUsername   string             `json:"creator_username"`
+	CreatorID         string             `jsona:"creator_id"`
 }
 
 func (r *Recipe) ValidateInput() error {
@@ -69,4 +72,25 @@ type RecipeIngredient struct {
 
 type GenericPostResponse struct {
 	ID string `json:"id"`
+}
+
+type GetRecipeListResponse struct {
+	Items []ReceipeItem `json:"data"`
+	Total int64         `json:"total"`
+}
+
+type ReceipeItem struct {
+	ID                string     `json:"_id"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	PriceEstimation   int64      `json:"price_estimation"`
+	CountryOrigin     string     `json:"country_origin"`
+	TimeToCookMinutes int64      `json:"time_to_cook_minutes"`
+	CalorieCount      int64      `json:"calorie_count"`
+	Difficulty        Difficulty `json:"difficulty"`
+	Tags              []string   `json:"tags"`
+	Tools             []string   `json:"tools"`
+	CreatorName       string     `json:"creator_name"`
+	CreatorUsername   string     `json:"creator_username"`
+	CreatorID         string     `jsona:"creator_id"`
 }

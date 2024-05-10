@@ -55,7 +55,7 @@ func GetConfig() (*Config, error) {
 
 	}
 	fileName := fmt.Sprintf("%s.%s.yaml", "joona-config", env)
-	filePath := filepath.Join(pathBase, "/etc/apollo/joona-config", fileName)
+	filePath := filepath.Join(pathBase, "/etc/joona-config", fileName)
 	log.Infoln("reading config file from: ", filePath)
 
 	f, err := os.Open(filePath)

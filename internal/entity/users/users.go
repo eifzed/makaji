@@ -14,12 +14,14 @@ type UserDetail struct {
 	Email    string `json:"email" xorm:"email"`
 	Username string `json:"username" xorm:"username"`
 	Password string `json:"password" xorm:"-"`
+	FullName string `json:"full_name" xorm:"-"`
 }
 
 type UserRegistration struct {
 	Username string `json:"username" xorm:"username"`
 	Email    string `json:"email" xorm:"email"`
 	Password string `json:"password" xorm:"-"`
+	FullName string `json:"full_name"`
 }
 
 func (s *UserRegistration) ValidateInput() error {

@@ -29,6 +29,7 @@ type RouteRoles struct {
 type JWTPayload struct {
 	UserID         string
 	Email          string
+	FullName       string
 	Username       string
 	Roles          []users.UserRole
 	PasswordHashed string
