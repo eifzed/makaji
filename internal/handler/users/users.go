@@ -5,6 +5,7 @@ import (
 
 	"github.com/eifzed/joona/internal/entity/users"
 	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/leebenson/conform"
 )
 
 func (h *UsersHandler) RegisterNewAccount(w http.ResponseWriter, r *http.Request) {
@@ -16,6 +17,7 @@ func (h *UsersHandler) RegisterNewAccount(w http.ResponseWriter, r *http.Request
 		commonwriterRespondError(ctx, w, err)
 		return
 	}
+	conform.Strings(registerData)
 	if err := registerData.ValidateInput(); err != nil {
 		commonwriterRespondError(ctx, w, err)
 		return

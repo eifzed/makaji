@@ -27,11 +27,12 @@ type Server struct {
 }
 
 type Config struct {
-	Secrets    *SecretVault
-	Server     *Server                   `yaml:"server"`
-	Toggle     *toggle.Toggle            `yaml:"toggle"`
-	RouteRoles map[string]jwt.RouteRoles `yaml:"route_roles"`
-	Roles      Roles                     `yaml:"roles"`
+	Secrets      *SecretVault
+	Server       *Server                   `yaml:"server"`
+	Toggle       *toggle.Toggle            `yaml:"toggle"`
+	RouteRoles   map[string]jwt.RouteRoles `yaml:"route_roles"`
+	Roles        Roles                     `yaml:"roles"`
+	PublicRoutes []string                  `yaml:"public_routes"`
 }
 
 type Roles struct {
@@ -55,7 +56,7 @@ func GetConfig() (*Config, error) {
 
 	}
 	fileName := fmt.Sprintf("%s.%s.yaml", "joona-config", env)
-	filePath := filepath.Join(pathBase, "/etc/apollo/joona-config", fileName)
+	filePath := filepath.Join(pathBase, "/etc/joona-config", fileName)
 	log.Infoln("reading config file from: ", filePath)
 
 	f, err := os.Open(filePath)

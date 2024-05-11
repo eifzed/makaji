@@ -66,3 +66,8 @@ route_roles:
         name: "Public"
 
       
+public_routes: 
+  - "GET /v1/users/register"
+  - "GET /v1/recipes"
+  - "GET /v1/ingredients"
+  - "POST /v1/users/login"

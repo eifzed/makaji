@@ -1,4 +1,4 @@
-package recipes
+package db
 
 import (
 	"context"
@@ -14,4 +14,5 @@ type RecipesDBInterface interface {
 	// recipes
 	InsertRecipe(ctx context.Context, recipe *recipes.Recipe) error
 	GetRecipes(ctx context.Context, filter recipes.GetRecipeParams) (result []recipes.Recipe, err error)
+	UpdateRecipeByID(ctx context.Context, id string, recipe *recipes.Recipe) error
 }

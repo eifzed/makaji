@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/eifzed/joona/internal/entity/recipes"
+	"github.com/eifzed/joona/lib/common/commonerr"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -83,6 +84,34 @@ func (conn *recipesConn) InsertRecipe(ctx context.Context, recipe *recipes.Recip
 			return err
 		}
 		recipe.ID = result.InsertedID.(primitive.ObjectID).Hex()
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (conn *recipesConn) UpdateRecipeByID(ctx context.Context, id string, recipe *recipes.Recipe) error {
+	session := getSessionFromContext(ctx)
+
+	err := mongo.WithSession(ctx, session, func(sc mongo.SessionContext) error {
+		var collection *mongo.Collection
+		if session != nil {
+			collection = getCollectionFromSession(session, "recipes")
+		} else {
+			collection = conn.DB.Collection("recipes")
+		}
+		oid, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			return commonerr.InvalidObjectID
+		}
+
+		result, err := collection.UpdateByID(ctx, oid, recipe)
+		if err != nil {
+			return err
+		}
+		recipe.ID = result.UpsertedID.(primitive.ObjectID).Hex()
 		return nil
 	})
 	if err != nil {

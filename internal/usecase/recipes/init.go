@@ -2,23 +2,25 @@ package recipes
 
 import (
 	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/repo/recipes"
+	"github.com/eifzed/joona/internal/entity/repo/db"
 	"github.com/eifzed/joona/internal/entity/repo/transactions"
 	"github.com/eifzed/joona/internal/entity/repo/users"
 )
 
 type recipesUC struct {
 	usersDB   users.UsersDBInterface
-	recipesDB recipes.RecipesDBInterface
+	recipesDB db.RecipesDBInterface
 	config    *config.Config
 	tx        transactions.TransactionInterface
+	elastic   db.ElasticsearchInterface
 }
 
 type Options struct {
 	UsersDB   users.UsersDBInterface
 	Config    *config.Config
 	TX        transactions.TransactionInterface
-	RecipesDB recipes.RecipesDBInterface
+	RecipesDB db.RecipesDBInterface
+	Elastic   db.ElasticsearchInterface
 }
 
 func GetNewRecipesUC(option *Options) *recipesUC {
@@ -30,5 +32,6 @@ func GetNewRecipesUC(option *Options) *recipesUC {
 		config:    option.Config,
 		tx:        option.TX,
 		recipesDB: option.RecipesDB,
+		elastic:   option.Elastic,
 	}
 }
