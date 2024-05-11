@@ -17,6 +17,7 @@ require (
 
 require (
 	github.com/elastic/elastic-transport-go/v8 v8.5.0 // indirect
+	github.com/etgryphon/stringUp v0.0.0-20121020160746-31534ccd8cac // indirect
 	github.com/friendsofgo/errors v0.9.2 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
@@ -44,6 +45,7 @@ require (
 	github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.1 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
+	github.com/leebenson/conform v1.2.2
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/sirupsen/logrus v1.2.0 // indirect

@@ -21,6 +21,6 @@ type GetIngredientsRequest struct {
 
 type GenericFilterParams struct {
 	Keyword string `json:"keyword" schema:"keyword"`
-	Limit   int    `json:"limit" schema:"limit"`
-	Page    int    `json:"page" schema:"page"`
+	Limit   uint32 `json:"limit" schema:"limit"`
+	Page    uint32 `json:"page" schema:"page"`
 }

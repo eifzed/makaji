@@ -117,18 +117,19 @@ func parsePublicKey(pemBytes []byte) (*rsa.PublicKey, error) {
 	}
 }
 
-func DecodeToken(token string, publicKey string) (*JWTPayload, error) {
+func DecodeToken(token string, publicKey string) (payload JWTPayload, err error) {
 	payloadJSON, err := getJWTPayload(token, publicKey)
 	if err != nil {
-		return nil, err
+		return
 	}
-	payload := &JWTPayload{}
-	err = json.Unmarshal(payloadJSON, payload)
+	err = json.Unmarshal(payloadJSON, &payload)
 	if err != nil {
-		return nil, ErrInvalid
+		err = ErrInvalid
+		return
 	}
 	if payload.ExpiredUnix < time.Now().Unix() {
-		return nil, ErrExpired
+		err = ErrExpired
+		return
 	}
 	return payload, nil
 }

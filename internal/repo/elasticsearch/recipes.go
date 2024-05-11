@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 
 	"github.com/eifzed/joona/internal/entity/recipes"
 	"github.com/elastic/go-elasticsearch/v8/typedapi/core/search"
@@ -15,7 +16,8 @@ func (es *elasticSearch) GetRecipeList(ctx context.Context, params recipes.GetRe
 	query := Search{}
 
 	if params.Keyword != "" {
-		query.Query.Bool.Should = append(query.Query.Bool.Should,
+		bool := Bool{}
+		bool.Should = append(bool.Should,
 			Should{Match: map[string]string{
 				"description": params.Keyword,
 			}},
@@ -29,8 +31,41 @@ func (es *elasticSearch) GetRecipeList(ctx context.Context, params recipes.GetRe
 			Should{Match: map[string]string{
 				"tags": params.Keyword,
 			}},
+			Should{Match: map[string]string{
+				"creator_name": params.Keyword,
+			}},
+			Should{Match: map[string]string{
+				"creator_username": params.Keyword,
+			}},
 		)
-		query.Query.Bool.MinimumShouldMatch = 1
+		bool.MinimumShouldMatch = 1
+		query.Query.Bool = &bool
+	}
+	if params.CalorieMin > 0 {
+		query.Query.AddRange("calorie_count", Range{GreaterThanOrEqualTo: float64(params.CalorieMin)})
+	}
+
+	if params.CalorieMax > 0 {
+		query.Query.AddRange("calorie_count", Range{LessThanOrEqualTo: float64(params.CalorieMin)})
+	}
+
+	if params.PriceMin > 0 {
+		query.Query.AddRange("price_estimation", Range{GreaterThanOrEqualTo: float64(params.PriceMin)})
+	}
+
+	if params.PriceMax > 0 {
+		query.Query.AddRange("price_estimation", Range{LessThanOrEqualTo: float64(params.PriceMax)})
+	}
+
+	if params.Difficulty != "" {
+		if query.Query.Bool == nil {
+			query.Query.Bool = &Bool{}
+		}
+		query.Query.Bool.Should = append(query.Query.Bool.Should,
+			Should{Match: map[string]string{
+				"difficulty": params.Difficulty,
+			}},
+		)
 	}
 
 	query.SetPagination(params.Page, params.Limit)
@@ -60,7 +95,9 @@ func (es *elasticSearch) GetRecipeList(ctx context.Context, params recipes.GetRe
 	defer resp.Body.Close()
 	var searchResult search.Response
 
-	if err = json.NewDecoder(resp.Body).Decode(&searchResult); err != nil {
+	repBody, _ := io.ReadAll(resp.Body)
+
+	if err = json.Unmarshal(repBody, &searchResult); err != nil {
 		err = errors.Wrap(err, "json.NewDecoder")
 		return
 	}
@@ -84,16 +121,17 @@ func (es *elasticSearch) InsertRecipe(ctx context.Context, data *recipes.Receipe
 		return fmt.Errorf("failed to serialize document: %w", err)
 	}
 
-	resp, err := es.client.Index(
+	resp, err := es.client.Create(
 		"recipes",
+		data.ID,
 		bytes.NewReader(dataByte),
 	)
 	if err != nil {
-		err = errors.Wrap(err, "Index")
+		err = errors.Wrap(err, "Create")
 	}
 
 	if resp.IsError() {
-		err = errors.Wrap(err, "Search."+resp.String())
+		err = errors.Wrap(err, "Create."+resp.String())
 		return
 	}
 	return
