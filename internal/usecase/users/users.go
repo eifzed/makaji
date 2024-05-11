@@ -59,7 +59,7 @@ func (uc *usersUC) getUserAuth(userData users.UserDetail) (*users.UserAuth, erro
 		UserID:         userData.UserID,
 		Email:          userData.Email,
 		PasswordHashed: userData.Password,
-		FullName:       userData.Email,
+		FullName:       userData.FullName,
 		Username:       userData.Username,
 	}
 	token, err := jwt.GenerateToken(userPayload, uc.Config.Secrets.Data.JWTCertificate.PrivateKey, constant.MinutesInOneDay)

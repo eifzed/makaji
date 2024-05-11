@@ -18,15 +18,18 @@ type UserDetail struct {
 }
 
 type UserRegistration struct {
-	Username string `json:"username" xorm:"username"`
-	Email    string `json:"email" xorm:"email"`
-	Password string `json:"password" xorm:"-"`
-	FullName string `json:"full_name"`
+	Username string `json:"username" conform:"trim"`
+	Email    string `json:"email" conform:"email"`
+	Password string `json:"password"`
+	FullName string `json:"full_name" conform:"name"`
 }
 
 func (s *UserRegistration) ValidateInput() error {
 	if s.Username == "" || s.Password == "" || s.Email == "" {
 		return commonerr.ErrorBadRequest("invalid input", "email, username, and email cannot be empty")
+	}
+	if len(s.FullName) < 4 {
+		return commonerr.ErrorBadRequest("invalid input", "full name must be at least 4 characters")
 	}
 	if _, err := mail.ParseAddress(s.Email); err != nil {
 		return commonerr.ErrorBadRequest("invalid email", "invalid email format")

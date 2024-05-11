@@ -80,7 +80,7 @@ type GetRecipeListResponse struct {
 }
 
 type ReceipeItem struct {
-	ID                string     `json:"_id"`
+	ID                string     `json:"recipe_id"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	PriceEstimation   int64      `json:"price_estimation"`

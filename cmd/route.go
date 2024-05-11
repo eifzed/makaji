@@ -20,16 +20,12 @@ func getRoute(m *modules) *chi.Mux {
 		w.Write([]byte(fmt.Sprintf("{\"CommitHash\": \"%s\"}", CommitHash)))
 	})
 	router.Route("/v1", func(v1 chi.Router) {
-		v1.Group(func(noAuthRoute chi.Router) {
-			path.Group("/users", func(usersRoute urlpath.Routes) {
-				noAuthRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
-			})
-		})
-
 		v1.Group(func(authRoute chi.Router) {
 			authRoute.Use(m.AuthModule.AuthHandler)
 			path.Group("/users", func(usersRoute urlpath.Routes) {
 				authRoute.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
+				authRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
+
 			})
 
 			path.Group("/ingredients", func(ingredientsRoute urlpath.Routes) {

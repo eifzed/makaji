@@ -37,6 +37,6 @@ jobs:
             git pull
             /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
             sudo systemctl stop joona.service
-            cp ./joona /usr/bin
-            cp -R ./files/etc/* /etc/apollo/
+            sudo cp ./joona /usr/bin
+            sudo cp -R ./files/etc/joona-config/* /etc/joona-config
             sudo systemctl start joona.service

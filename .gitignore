@@ -1,2 +1,4 @@
-*.development.json
-*.production.json
+*joona-secret.development.json
+*joona-secret.production.json
+
+*/files/etc/joona-secret/*
