@@ -72,4 +72,16 @@ public_routes:
   - "GET /v1/ingredients"
   - "POST /v1/users/login"
 
-      
+file:
+  max_image_upload_size_byte: 5000000
+  mime_type_whitelist:
+    - "image/jpeg"
+    - "image/png"
+    - "image/gif"
+    - "image/bmp"
+    - "image/svg+xml"
+  container_whitelist:
+    - "recipe-images"
+    - "ingredient-images"
+    - "user-images"
+

@@ -33,6 +33,13 @@ type Config struct {
 	RouteRoles   map[string]jwt.RouteRoles `yaml:"route_roles"`
 	Roles        Roles                     `yaml:"roles"`
 	PublicRoutes []string                  `yaml:"public_routes"`
+	File         FileConfig                `yaml:"file"`
+}
+
+type FileConfig struct {
+	MaxImageUploadSizeByte int64    `yaml:"max_image_upload_size_byte"`
+	MimeTypeWhitelist      []string `yaml:"mime_type_whitelist"`
+	ContainerWhitelist     []string `yaml:"container_whitelist"`
 }
 
 type Roles struct {
