@@ -13,6 +13,7 @@ type recipesUC struct {
 	config    *config.Config
 	tx        transactions.TransactionInterface
 	elastic   db.ElasticsearchInterface
+	redis     db.RedisInterface
 }
 
 type Options struct {
@@ -21,6 +22,7 @@ type Options struct {
 	TX        transactions.TransactionInterface
 	RecipesDB db.RecipesDBInterface
 	Elastic   db.ElasticsearchInterface
+	Redis     db.RedisInterface
 }
 
 func GetNewRecipesUC(option *Options) *recipesUC {
@@ -33,5 +35,6 @@ func GetNewRecipesUC(option *Options) *recipesUC {
 		tx:        option.TX,
 		recipesDB: option.RecipesDB,
 		elastic:   option.Elastic,
+		redis:     option.Redis,
 	}
 }

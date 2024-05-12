@@ -34,6 +34,14 @@ type Config struct {
 	Roles        Roles                     `yaml:"roles"`
 	PublicRoutes []string                  `yaml:"public_routes"`
 	File         FileConfig                `yaml:"file"`
+	Redis        Redis                     `yaml:"redis"`
+}
+
+type Redis struct {
+	MaxActive     int    `yaml:"max_active"`
+	MaxIdle       int    `yaml:"max_idle"`
+	TimeoutSecond int    `yaml:"timeout_second"`
+	Address       string `yaml:"address"`
 }
 
 type FileConfig struct {

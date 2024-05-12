@@ -2,6 +2,8 @@ package common
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
 	"io"
 	"os"
 	"time"
@@ -27,4 +29,10 @@ func GenerateUUIDV7() string {
 
 	ulid := ulid.MustNew(ulid.Timestamp(t), entropy)
 	return ulid.String()
+}
+
+func ComputeSHA256(data []byte) string {
+	h := sha256.New()
+	h.Write(data)
+	return hex.EncodeToString(h.Sum(nil))
 }
