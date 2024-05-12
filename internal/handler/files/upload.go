@@ -34,7 +34,7 @@ func (h *FileHandler) getAndValidateParams(r *http.Request) (param files.UploadF
 	container := r.FormValue("container")
 	if !h.checkIsValidContainer(container) {
 		err = commonerr.ErrorBadRequest("upload_file", "invalid container")
-
+		return
 	}
 
 	maxFileSize := h.Config.File.MaxImageUploadSizeByte
@@ -77,7 +77,7 @@ func (h *FileHandler) getAndValidateParams(r *http.Request) (param files.UploadF
 	param = files.UploadFileRequest{
 		File:      fileByte,
 		Container: container,
-		Filename:  fmt.Sprintf("%s.%s", common.GenerateUUIDV7(), constant.MapMimeToExtension[mimeType]),
+		Filename:  fmt.Sprintf("%s%s", common.GenerateUUIDV7(), constant.MapMimeToExtension[mimeType]),
 	}
 
 	return

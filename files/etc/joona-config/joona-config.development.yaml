@@ -85,3 +85,9 @@ file:
     - "ingredient-images"
     - "user-images"
 
+redis:
+  max_active_conn: 100
+  max_idle_conn: 10
+  timeout: 100
+  address: "zeus.southeastasia.cloudapp.azure.com:6379"
+  

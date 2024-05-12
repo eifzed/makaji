@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 
 	// "github.com/eifzed/joona/lib/utility/urlpath"
@@ -13,9 +12,6 @@ import (
 func getRoute(m *modules) *chi.Mux {
 	router := chi.NewRouter()
 	path := urlpath.New("")
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "hello inud")
-	})
 	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprintf("{\"CommitHash\": \"%s\"}", CommitHash)))
 	})

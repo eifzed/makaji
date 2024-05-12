@@ -13,6 +13,7 @@ import (
 	"github.com/eifzed/joona/internal/repo/blob"
 	"github.com/eifzed/joona/internal/repo/elasticsearch"
 	"github.com/eifzed/joona/internal/repo/recipes"
+	"github.com/eifzed/joona/internal/repo/redis"
 	"github.com/eifzed/joona/internal/repo/users"
 	fileUsecase "github.com/eifzed/joona/internal/usecase/files"
 	recipesUsecase "github.com/eifzed/joona/internal/usecase/recipes"
@@ -75,6 +76,14 @@ func main() {
 		log.Fatal(err)
 	}
 
+	redisConn := redis.New(redis.Options{
+		MaxIdle:       cfg.Redis.MaxIdle,
+		MaxActive:     cfg.Redis.MaxActive,
+		TimeoutSecond: cfg.Redis.TimeoutSecond,
+		AuthKey:       cfg.Secrets.Data.RedisAuth,
+		Address:       cfg.Redis.Address,
+	})
+
 	usersUC := usersUsecase.GetNewUsersUC(&usersUsecase.Options{
 		UsersDB: &usersDB,
 		TX:      tx,
@@ -87,6 +96,7 @@ func main() {
 		TX:        tx,
 		RecipesDB: &recipesDB,
 		Elastic:   esClient,
+		Redis:     redisConn,
 	})
 
 	fileUC := fileUsecase.GetNewFileUC(&fileUsecase.Options{

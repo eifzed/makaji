@@ -21,6 +21,7 @@ type DataVault struct {
 	JWTCertificate *jwt.JWTCertificate `json:"jwt_certificate"`
 	Elasticsearch  *Elasticsearch      `json:"elasticsearch"`
 	AzureBlob      *AzureBlob          `json:"azure_blob"`
+	RedisAuth      string              `json:"redis_auth"`
 }
 type AzureBlob struct {
 	AccountName string `json:"account_name"`
