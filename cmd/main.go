@@ -7,11 +7,15 @@ import (
 	"github.com/eifzed/joona/internal/config"
 	"github.com/eifzed/joona/internal/entity/handler/http"
 	"github.com/eifzed/joona/internal/handler/auth"
+	fileHttpHandler "github.com/eifzed/joona/internal/handler/files"
 	recipesHttpHandler "github.com/eifzed/joona/internal/handler/recipes"
 	usersHttpHandler "github.com/eifzed/joona/internal/handler/users"
+	"github.com/eifzed/joona/internal/repo/blob"
 	"github.com/eifzed/joona/internal/repo/elasticsearch"
 	"github.com/eifzed/joona/internal/repo/recipes"
+	"github.com/eifzed/joona/internal/repo/redis"
 	"github.com/eifzed/joona/internal/repo/users"
+	fileUsecase "github.com/eifzed/joona/internal/usecase/files"
 	recipesUsecase "github.com/eifzed/joona/internal/usecase/recipes"
 	usersUsecase "github.com/eifzed/joona/internal/usecase/users"
 	"github.com/eifzed/joona/lib/database/mongodb/transactions"
@@ -63,6 +67,23 @@ func main() {
 		log.Fatal(err)
 	}
 
+	blobService, err := blob.New(blob.Option{
+		AccountName: cfg.Secrets.Data.AzureBlob.AccountName,
+		AccountKey:  cfg.Secrets.Data.AzureBlob.AccountKey,
+		Config:      cfg,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	redisConn := redis.New(redis.Options{
+		MaxIdle:       cfg.Redis.MaxIdle,
+		MaxActive:     cfg.Redis.MaxActive,
+		TimeoutSecond: cfg.Redis.TimeoutSecond,
+		AuthKey:       cfg.Secrets.Data.RedisAuth,
+		Address:       cfg.Redis.Address,
+	})
+
 	usersUC := usersUsecase.GetNewUsersUC(&usersUsecase.Options{
 		UsersDB: &usersDB,
 		TX:      tx,
@@ -75,6 +96,12 @@ func main() {
 		TX:        tx,
 		RecipesDB: &recipesDB,
 		Elastic:   esClient,
+		Redis:     redisConn,
+	})
+
+	fileUC := fileUsecase.GetNewFileUC(&fileUsecase.Options{
+		Config: cfg,
+		Blob:   blobService,
 	})
 
 	usersHadler := usersHttpHandler.NewUsersHandler(&usersHttpHandler.UsersHandler{
@@ -87,6 +114,11 @@ func main() {
 		Config:    cfg,
 	})
 
+	fileHandler := fileHttpHandler.NewFileHandler(&fileHttpHandler.FileHandler{
+		Config: cfg,
+		FileUC: fileUC,
+	})
+
 	authModule := auth.NewAuthModule(&auth.AuthModule{
 		JWTCertificate: cfg.Secrets.Data.JWTCertificate,
 		RouteRoles:     cfg.RouteRoles,
@@ -97,6 +129,7 @@ func main() {
 		httpHandler: &http.HttpHandler{
 			UsersHandler:   usersHadler,
 			RecipesHandler: recipesHandler,
+			FileHandler:    fileHandler,
 		},
 		AuthModule: authModule,
 	})

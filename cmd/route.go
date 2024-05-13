@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 
 	// "github.com/eifzed/joona/lib/utility/urlpath"
@@ -13,9 +12,6 @@ import (
 func getRoute(m *modules) *chi.Mux {
 	router := chi.NewRouter()
 	path := urlpath.New("")
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "hello inud")
-	})
 	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprintf("{\"CommitHash\": \"%s\"}", CommitHash)))
 	})
@@ -25,7 +21,6 @@ func getRoute(m *modules) *chi.Mux {
 			path.Group("/users", func(usersRoute urlpath.Routes) {
 				authRoute.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
 				authRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
-
 			})
 
 			path.Group("/ingredients", func(ingredientsRoute urlpath.Routes) {
@@ -36,6 +31,10 @@ func getRoute(m *modules) *chi.Mux {
 			path.Group("/recipes", func(recipesRoute urlpath.Routes) {
 				authRoute.Post(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.CreateRecipe)
 				authRoute.Get(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.GetRecipes)
+			})
+
+			path.Group("/files", func(filesRoute urlpath.Routes) {
+				authRoute.Post(filesRoute.URL("/"), m.httpHandler.FileHandler.UploadFile)
 			})
 
 		})

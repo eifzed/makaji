@@ -28,8 +28,6 @@ func New(opt Option) (client *elasticSearch, err error) {
 		return
 	}
 
-	// boolQ
-	// esClient.Search().Index("recipes").Request(&search.Request{Query: })
 	client = &elasticSearch{
 		config: opt.Config,
 		client: esClient,

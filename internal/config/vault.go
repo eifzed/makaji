@@ -20,6 +20,12 @@ type DataVault struct {
 	MongoDBConfig  *mongodb.Config     `json:"mongo_db_config"`
 	JWTCertificate *jwt.JWTCertificate `json:"jwt_certificate"`
 	Elasticsearch  *Elasticsearch      `json:"elasticsearch"`
+	AzureBlob      *AzureBlob          `json:"azure_blob"`
+	RedisAuth      string              `json:"redis_auth"`
+}
+type AzureBlob struct {
+	AccountName string `json:"account_name"`
+	AccountKey  string `json:"account_key"`
 }
 
 type Elasticsearch struct {
