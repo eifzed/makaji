@@ -32,8 +32,8 @@ Although the tech stacks seem way too overkill for a mock service, they are chos
 
 3. **Setup Config File**
     ```bash
-   mv ./files/etc/joona-config/joona-config.development.yaml.example ./files/etc/joona-config/joona-config.development.yaml
-   mv ./files/etc/joona-secret/joona-secret.development.json.example ./files/etc/joona-secret/joona-secret.development.json
+   cp ./files/etc/joona-config/joona-config.development.yaml.example ./files/etc/joona-config/joona-config.development.yaml
+   cp ./files/etc/joona-secret/joona-secret.development.json.example ./files/etc/joona-secret/joona-secret.development.json
    ```
 3. **Run Application:**
    ```bash
