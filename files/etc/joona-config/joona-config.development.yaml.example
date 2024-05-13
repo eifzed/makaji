@@ -1,0 +1,96 @@
+server:
+  name: "joona"
+  http:
+    address: ":10004"
+  debug: 1
+  url: "http://localhost:10004"
+
+toggle:
+  enable_something: true
+
+environment:
+  is_local: true
+  is_debug: true
+  einhorn_fds: 3
+
+roles:
+  developer: 1
+  admin: 2
+  user: 3
+  public: 999999
+
+route_roles:
+  "":
+    roles:
+      - id: 1
+        name: "Developer"
+      - id: 2
+        name: "Admin"
+      - id: 3
+        name: "Customer"
+      - id: 4
+        name: "PIC"
+      - id: 5
+        name: "Owner"
+      - id: 6
+        name: "User"
+
+  "POST /v1/users/register":
+    roles:
+      - id: 999999
+        name: "Public"
+
+  "POST /v1/users/login":
+    roles:
+      - id: 999999
+        name: "Public"
+
+  "POST /v1/ingredients":
+    roles:
+      - id: 999999
+        name: "Public"
+  
+  "GET /v1/ingredients":
+    roles:
+      - id: 999999
+        name: "Public"
+  
+  "POST /v1/recipes":
+    roles:
+      - id: 999999
+        name: "Public"
+
+  "GET /v1/recipes":
+    roles:
+      - id: 999999
+        name: "Public"
+
+
+public_routes: 
+  - "GET /v1/users/register"
+  - "GET /v1/recipes"
+  - "GET /v1/ingredients"
+  - "POST /v1/users/login"
+
+file:
+  max_image_upload_size_byte: 5000000
+  mime_type_whitelist:
+    - "image/jpeg"
+    - "image/png"
+    - "image/gif"
+    - "image/bmp"
+    - "image/svg+xml"
+  container_whitelist:
+    - "recipe-images"
+    - "ingredient-images"
+    - "user-images"
+
+redis:
+  max_active_conn: 100
+  max_idle_conn: 10
+  timeout: 100
+  address: "localhost:6379"
+
+elasticsearch:
+  address: "http://localhost:9200"
+  
