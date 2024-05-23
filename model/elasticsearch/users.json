@@ -1,0 +1,64 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "custom_text_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ],
+          "char_filter": [
+            "html_strip"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "user_id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "full_name": {
+        "type": "text",
+        "analyzer": "custom_text_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "username": {
+        "type": "text",
+        "analyzer": "custom_text_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "profile_picture": {
+        "type": "text",
+        "index": false
+      },
+      "bio": {
+        "type": "text",
+        "index": false
+      },
+      "nationality": {
+        "type": "text",
+        "index": false
+      }
+    }
+  }
+}

@@ -7,14 +7,30 @@ import (
 	"unicode"
 
 	"github.com/eifzed/joona/lib/common/commonerr"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserDetail struct {
-	UserID   string `json:"-" xorm:"user_id pk autoincr"`
-	Email    string `json:"email" xorm:"email"`
-	Username string `json:"username" xorm:"username"`
-	Password string `json:"password" xorm:"-"`
-	FullName string `json:"full_name" xorm:"-"`
+	UserID         primitive.ObjectID `json:"_id" bson:"_id"`
+	Email          string             `json:"email" bson:"email"`
+	Username       string             `json:"username" bson:"username"`
+	Password       string             `json:"password" bson:"password"`
+	FullName       string             `json:"full_name" bson:"full_name"`
+	ProfilePicture string             `json:"profile_picture" bson:"profile_picture"`
+	Nationality    string             `json:"nationality" bson:"nationality"`
+	Occupation     string             `json:"occupation" bson:"occupation"`
+	Bio            string             `json:"bio" bson:"bio"`
+}
+
+type UserProfile struct {
+	UserID         primitive.ObjectID `json:"_id" bson:"_id"`
+	Email          string             `json:"email" bson:"email"`
+	Username       string             `json:"username" bson:"username"`
+	FullName       string             `json:"full_name" bson:"full_name"`
+	ProfilePicture string             `json:"profile_picture" bson:"profile_picture"`
+	Nationality    string             `json:"nationality" bson:"nationality"`
+	Occupation     string             `json:"occupation" bson:"occupation"`
+	Bio            string             `json:"bio" bson:"bio"`
 }
 
 type UserRegistration struct {
@@ -84,11 +100,20 @@ type UserLogin struct {
 }
 
 type UserAuth struct {
-	Token      string
-	ValidUntil time.Time
+	Token      string    `json:"token"`
+	ValidUntil time.Time `json:"valid_until"`
 }
 
 type UserRole struct {
 	ID   int64  `yaml:"id" json:"id" xorm:"role_id"`
 	Name string `yaml:"name" json:"name" xorm:"role_name"`
+}
+
+type UserItem struct {
+	UserID         string `json:"user_id"`
+	Username       string `json:"username"`
+	FullName       string `json:"full_name"`
+	ProfilePicture string `json:"profile_picture"`
+	Nationality    string `json:"nationality"`
+	Bio            string `json:"bio"`
 }

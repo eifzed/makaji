@@ -2,20 +2,23 @@ package users
 
 import (
 	"github.com/eifzed/joona/internal/config"
+	"github.com/eifzed/joona/internal/entity/repo/db"
 	"github.com/eifzed/joona/internal/entity/repo/transactions"
 	"github.com/eifzed/joona/internal/entity/repo/users"
 )
 
 type usersUC struct {
-	UsersDB users.UsersDBInterface
-	Config  *config.Config
-	TX      transactions.TransactionInterface
+	usersDB users.UsersDBInterface
+	config  *config.Config
+	tx      transactions.TransactionInterface
+	elastic db.ElasticsearchInterface
 }
 
 type Options struct {
 	UsersDB users.UsersDBInterface
 	Config  *config.Config
 	TX      transactions.TransactionInterface
+	Elastic db.ElasticsearchInterface
 }
 
 func GetNewUsersUC(option *Options) *usersUC {
@@ -23,8 +26,9 @@ func GetNewUsersUC(option *Options) *usersUC {
 		return nil
 	}
 	return &usersUC{
-		UsersDB: option.UsersDB,
-		Config:  option.Config,
-		TX:      option.TX,
+		usersDB: option.UsersDB,
+		config:  option.Config,
+		tx:      option.TX,
+		elastic: option.Elastic,
 	}
 }

@@ -61,5 +61,6 @@ func ErrorNotFound(context string) *ErrorMessage {
 }
 
 var (
-	InvalidObjectID = ErrorBadRequest("id", "invalid id")
+	InvalidObjectID     = ErrorBadRequest("id", "invalid id")
+	DefaultUnauthorized = ErrorUnauthorized("you must sign in to perform this action")
 )
