@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/eifzed/joona/internal/entity/users"
+	"github.com/eifzed/joona/lib/common"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
@@ -52,7 +53,53 @@ func (conn *UsersDB) InsertUser(ctx context.Context, userDetail *users.UserDetai
 		if err != nil {
 			return err
 		}
-		userDetail.UserID = result.InsertedID.(primitive.ObjectID).Hex()
+		userDetail.UserID = result.InsertedID.(primitive.ObjectID)
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (conn *UsersDB) GetUserProfileByEmail(ctx context.Context, email string) (user users.UserProfile, err error) {
+	filter := bson.M{"email": email}
+	result := conn.DB.Collection("users").FindOne(ctx, filter)
+	err = result.Decode(&user)
+	if err != nil {
+		return
+	}
+	return user, nil
+}
+
+func (conn *UsersDB) GetUserProfileByID(ctx context.Context, id primitive.ObjectID) (user users.UserProfile, err error) {
+	filter := bson.M{"_id": id}
+	result := conn.DB.Collection("users").FindOne(ctx, filter)
+	err = result.Decode(&user)
+	if err != nil {
+		return
+	}
+	return user, nil
+}
+
+func (conn *UsersDB) UpdateUserByID(ctx context.Context, userID primitive.ObjectID, userDetail *users.UserProfile) (err error) {
+	session := getSessionFromContext(ctx)
+
+	err = mongo.WithSession(ctx, session, func(sc mongo.SessionContext) error {
+		var collection *mongo.Collection
+		if session != nil {
+			collection = getCollectionFromSession(session, "users")
+		} else {
+			collection = conn.DB.Collection("users")
+		}
+
+		updateDoc := common.ToBsonM(*userDetail)
+
+		_, err := collection.UpdateByID(ctx, userID, updateDoc)
+		if err != nil {
+			return err
+		}
+		// userDetail.UserID = result.UpsertedID.(primitive.ObjectID)
 		return nil
 	})
 	if err != nil {

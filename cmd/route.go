@@ -21,6 +21,9 @@ func getRoute(m *modules) *chi.Mux {
 			path.Group("/users", func(usersRoute urlpath.Routes) {
 				authRoute.Post(usersRoute.URL("/login"), m.httpHandler.UsersHandler.LoginUser)
 				authRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
+				authRoute.Get(usersRoute.URL("/{id}"), m.httpHandler.UsersHandler.GetUserByID)
+				authRoute.Get(usersRoute.URL("/self"), m.httpHandler.UsersHandler.GetSelfUser)
+				authRoute.Put(usersRoute.URL("/self"), m.httpHandler.UsersHandler.UpdateSelfUser)
 			})
 
 			path.Group("/ingredients", func(ingredientsRoute urlpath.Routes) {

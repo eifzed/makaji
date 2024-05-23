@@ -37,9 +37,7 @@ type Recipe struct {
 	Tools             []string           `json:"tools" bson:"tools"`
 	Ingredients       []RecipeIngredient `json:"ingredients" bson:"ingredients"`
 	Steps             []StepGroup        `json:"steps" bson:"steps"`
-	CreatorName       string             `json:"creator_name"`
-	CreatorUsername   string             `json:"creator_username"`
-	CreatorID         string             `jsona:"creator_id"`
+	CreatorID         string             `json:"creator_id"`
 }
 
 func (r *Recipe) ValidateInput() error {
@@ -90,7 +88,7 @@ type ReceipeItem struct {
 	Difficulty        Difficulty `json:"difficulty"`
 	Tags              []string   `json:"tags"`
 	Tools             []string   `json:"tools"`
-	CreatorName       string     `json:"creator_name"`
-	CreatorUsername   string     `json:"creator_username"`
+	CreatorName       string     `json:"creator_name,omitempty"`
+	CreatorUsername   string     `json:"creator_username,omitempty"`
 	CreatorID         string     `jsona:"creator_id"`
 }

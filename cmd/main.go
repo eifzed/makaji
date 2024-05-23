@@ -88,6 +88,7 @@ func main() {
 		UsersDB: &usersDB,
 		TX:      tx,
 		Config:  cfg,
+		Elastic: esClient,
 	})
 
 	recipesUC := recipesUsecase.GetNewRecipesUC(&recipesUsecase.Options{

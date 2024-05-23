@@ -19,8 +19,6 @@ func (uc *recipesUC) CreateRecipe(ctx context.Context, params recipes.Recipe) (r
 		err = commonerr.ErrorUnauthorized("you need to be logged in to post a recipe")
 		return
 	}
-	params.CreatorName = user.FullName
-	params.CreatorUsername = user.Username
 	params.CreatorID = user.UserID
 
 	ctx, err = uc.tx.Start(ctx)
@@ -61,8 +59,6 @@ func (uc *recipesUC) UpdateRecipe(ctx context.Context, params recipes.Recipe) (r
 		err = commonerr.ErrorUnauthorized("you need to be logged in to edit a recipe")
 		return
 	}
-	params.CreatorName = user.FullName
-	params.CreatorUsername = user.Username
 	params.CreatorID = user.UserID
 
 	ctx, err = uc.tx.Start(ctx)
