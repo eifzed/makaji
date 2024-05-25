@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/eifzed/joona/internal/entity/recipes"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type RecipesDBInterface interface {
@@ -15,4 +16,5 @@ type RecipesDBInterface interface {
 	InsertRecipe(ctx context.Context, recipe *recipes.Recipe) error
 	GetRecipes(ctx context.Context, filter recipes.GetRecipeParams) (result []recipes.Recipe, err error)
 	UpdateRecipeByID(ctx context.Context, id string, recipe *recipes.Recipe) error
+	GetRecipeByID(ctx context.Context, id primitive.ObjectID) (recipe recipes.Recipe, err error)
 }

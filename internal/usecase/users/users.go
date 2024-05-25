@@ -2,8 +2,11 @@ package users
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"time"
 
+	"github.com/eifzed/joona/lib/common"
 	"github.com/eifzed/joona/lib/utility/hash"
 	"github.com/eifzed/joona/lib/utility/jwt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -11,6 +14,7 @@ import (
 	"github.com/eifzed/joona/internal/constant"
 	"github.com/eifzed/joona/internal/entity/users"
 	"github.com/eifzed/joona/internal/handler/auth"
+	"github.com/eifzed/joona/internal/repo/redis"
 	"github.com/eifzed/joona/lib/common/commonerr"
 	"github.com/pkg/errors"
 )
@@ -131,6 +135,56 @@ func (uc *usersUC) GetUserByID(ctx context.Context, id primitive.ObjectID) (data
 	data, err = uc.usersDB.GetUserProfileByID(ctx, id)
 	if err != nil {
 		err = errors.Wrap(err, "GetSelfUser.GetUserProfileByID")
+		return
+	}
+
+	return
+}
+
+const (
+	userListKey = "user-list-%s"
+)
+
+func (uc *usersUC) GetUserList(ctx context.Context, params users.GenericFilterParams) (result users.GetUserListResponse, err error) {
+	paramsB, err := json.Marshal(params)
+	if err != nil {
+		err = errors.Wrap(err, "GetUserList.json.Marshal")
+		return
+	}
+
+	hash := common.ComputeSHA256(paramsB)
+	key := fmt.Sprintf(userListKey, hash)
+
+	cachedList, err := uc.redis.Get(key)
+	if err != nil && !errors.Is(err, redis.ErrKeyNotFound) {
+		err = errors.Wrap(err, "GetUserList.redis.Get")
+		return
+	} else if err == nil {
+		jErr := json.Unmarshal([]byte(cachedList), &result)
+		if jErr == nil {
+			return
+		}
+	}
+
+	result, err = uc.elastic.GetUserList(ctx, params)
+	if err != nil {
+		err = errors.Wrap(err, "GetUserList.GetRecipeList")
+		return
+	}
+	resultB, err := json.Marshal(result)
+	if err != nil {
+		err = errors.Wrap(err, "GetUserList.json.Marshal")
+		return
+	}
+
+	userListCacheSecond := 120
+	if uc.config.CacheExpire.UserListSecond > 0 {
+		userListCacheSecond = uc.config.CacheExpire.UserListSecond
+	}
+
+	_, err = uc.redis.SetWithExpire(key, string(resultB), userListCacheSecond)
+	if err != nil {
+		err = errors.Wrap(err, "GetUserList.redis.SetWithExpire")
 		return
 	}
 

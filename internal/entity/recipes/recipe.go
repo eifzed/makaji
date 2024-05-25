@@ -73,7 +73,7 @@ type GenericPostResponse struct {
 }
 
 type GetRecipeListResponse struct {
-	Items []ReceipeItem `json:"data"`
+	Data  []ReceipeItem `json:"data"`
 	Total int64         `json:"total"`
 }
 
