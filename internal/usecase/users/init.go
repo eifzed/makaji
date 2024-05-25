@@ -12,6 +12,7 @@ type usersUC struct {
 	config  *config.Config
 	tx      transactions.TransactionInterface
 	elastic db.ElasticsearchInterface
+	redis   db.RedisInterface
 }
 
 type Options struct {
@@ -19,6 +20,7 @@ type Options struct {
 	Config  *config.Config
 	TX      transactions.TransactionInterface
 	Elastic db.ElasticsearchInterface
+	Redis   db.RedisInterface
 }
 
 func GetNewUsersUC(option *Options) *usersUC {
@@ -30,5 +32,6 @@ func GetNewUsersUC(option *Options) *usersUC {
 		config:  option.Config,
 		tx:      option.TX,
 		elastic: option.Elastic,
+		redis:   option.Redis,
 	}
 }

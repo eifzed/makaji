@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/eifzed/makaji/internal/entity/recipes"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type RecipesUCInterface interface {
@@ -12,4 +13,5 @@ type RecipesUCInterface interface {
 
 	CreateRecipe(ctx context.Context, params recipes.Recipe) (result recipes.GenericPostResponse, err error)
 	GetRecipes(ctx context.Context, params recipes.GetRecipeParams) (result recipes.GetRecipeListResponse, err error)
+	GetRecipeDetailByID(ctx context.Context, id primitive.ObjectID) (result recipes.Recipe, err error)
 }

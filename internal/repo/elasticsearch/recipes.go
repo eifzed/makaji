@@ -109,7 +109,7 @@ func (es *elasticSearch) GetRecipeList(ctx context.Context, params recipes.GetRe
 		err = errors.Wrap(err, "bindResult")
 		return
 	}
-	result.Items = recipeData
+	result.Data = recipeData
 	result.Total = total
 
 	return

@@ -113,3 +113,24 @@ func (h *UsersHandler) UpdateSelfUser(w http.ResponseWriter, r *http.Request) {
 	}
 	commonwriterRespondOKWithData(ctx, w, auth)
 }
+
+func (h *UsersHandler) GetUserList(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	params := users.GenericFilterParams{
+		Limit: 10,
+		Page:  1,
+	}
+	err := bindingBind(r, &params)
+	if err != nil {
+		err = commonerr.ErrorBadRequest("invalid_params", "invalid params")
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+
+	auth, err := h.UsersUC.GetUserList(ctx, params)
+	if err != nil {
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+	commonwriterRespondOKWithData(ctx, w, auth)
+}

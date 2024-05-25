@@ -8,4 +8,5 @@ type UsersHandler interface {
 	GetSelfUser(w http.ResponseWriter, r *http.Request)
 	UpdateSelfUser(w http.ResponseWriter, r *http.Request)
 	GetUserByID(w http.ResponseWriter, r *http.Request)
+	GetUserList(w http.ResponseWriter, r *http.Request)
 }
