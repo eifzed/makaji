@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
+	"github.com/eifzed/makaji/internal/entity/recipes"
 )
 
 type RecipesDBInterface interface {

@@ -3,8 +3,8 @@ package recipes
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

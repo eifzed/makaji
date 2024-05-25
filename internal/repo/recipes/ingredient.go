@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/lib/utility"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/lib/utility"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

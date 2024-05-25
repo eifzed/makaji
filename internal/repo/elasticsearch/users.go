@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/eifzed/joona/internal/entity/users"
+	"github.com/eifzed/makaji/internal/entity/users"
 	"github.com/pkg/errors"
 )
 

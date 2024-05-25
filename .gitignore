@@ -1,4 +1,4 @@
-*joona-secret.development.json
-*joona-secret.production.json
+*makaji-secret.development.json
+*makaji-secret.production.json
 
-*/files/etc/joona-secret/*
+*/files/etc/makaji-secret/*

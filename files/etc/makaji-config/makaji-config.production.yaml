@@ -1,5 +1,5 @@
 server:
-  name: "joona"
+  name: "makaji"
   http:
     address: ":10004"
   debug: 1
@@ -65,12 +65,13 @@ route_roles:
       - id: 999999
         name: "Public"
 
-
+      
 public_routes: 
   - "GET /v1/users/register"
   - "GET /v1/recipes"
   - "GET /v1/ingredients"
   - "POST /v1/users/login"
+
 
 file:
   max_image_upload_size_byte: 5000000
@@ -85,9 +86,9 @@ file:
     - "ingredient-images"
     - "user-images"
 
+
 redis:
   max_active_conn: 100
   max_idle_conn: 10
   timeout: 100
-  address: "zeus.southeastasia.cloudapp.azure.com:6379"
-  
+  address: "localhost:6379"

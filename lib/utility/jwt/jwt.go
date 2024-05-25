@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eifzed/joona/internal/entity/users"
+	"github.com/eifzed/makaji/internal/entity/users"
 )
 
 type JWTCertificate struct {

@@ -1,7 +1,7 @@
 package elasticsearch
 
 import (
-	"github.com/eifzed/joona/internal/config"
+	"github.com/eifzed/makaji/internal/config"
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/pkg/errors"
 )

@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/users"
+	"github.com/eifzed/makaji/internal/entity/users"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

@@ -3,8 +3,8 @@ package users
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/users"
-	"github.com/eifzed/joona/lib/common"
+	"github.com/eifzed/makaji/internal/entity/users"
+	"github.com/eifzed/makaji/lib/common"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"

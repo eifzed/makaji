@@ -1,10 +1,10 @@
 package users
 
 import (
-	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/repo/db"
-	"github.com/eifzed/joona/internal/entity/repo/transactions"
-	"github.com/eifzed/joona/internal/entity/repo/users"
+	"github.com/eifzed/makaji/internal/config"
+	"github.com/eifzed/makaji/internal/entity/repo/db"
+	"github.com/eifzed/makaji/internal/entity/repo/transactions"
+	"github.com/eifzed/makaji/internal/entity/repo/users"
 )
 
 type usersUC struct {

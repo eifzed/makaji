@@ -3,7 +3,7 @@ package files
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/files"
+	"github.com/eifzed/makaji/internal/entity/files"
 	"github.com/pkg/errors"
 )
 

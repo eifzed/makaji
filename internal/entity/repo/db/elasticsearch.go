@@ -3,8 +3,8 @@ package db
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/internal/entity/users"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/internal/entity/users"
 )
 
 type ElasticsearchInterface interface {

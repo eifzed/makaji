@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/handler/auth"
-	"github.com/eifzed/joona/internal/entity/handler/http"
+	"github.com/eifzed/makaji/internal/config"
+	"github.com/eifzed/makaji/internal/entity/handler/auth"
+	"github.com/eifzed/makaji/internal/entity/handler/http"
 )
 
 type modules struct {

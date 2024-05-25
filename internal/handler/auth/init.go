@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/users"
-	"github.com/eifzed/joona/lib/common/commonerr"
-	"github.com/eifzed/joona/lib/common/commonwriter"
-	"github.com/eifzed/joona/lib/utility/jwt"
+	"github.com/eifzed/makaji/internal/config"
+	"github.com/eifzed/makaji/internal/entity/users"
+	"github.com/eifzed/makaji/lib/common/commonerr"
+	"github.com/eifzed/makaji/lib/common/commonwriter"
+	"github.com/eifzed/makaji/lib/utility/jwt"
 	"github.com/go-chi/chi"
 )
 
