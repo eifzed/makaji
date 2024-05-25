@@ -35,6 +35,12 @@ type Config struct {
 	PublicRoutes []string                  `yaml:"public_routes"`
 	File         FileConfig                `yaml:"file"`
 	Redis        Redis                     `yaml:"redis"`
+	CacheExpire  CacheExpire               `yaml:"redis_expire"`
+}
+
+type CacheExpire struct {
+	UserListSecond   int `json:"user_list_second"`
+	RecipeListSecond int `json:"recipe_list_second"`
 }
 
 type Redis struct {

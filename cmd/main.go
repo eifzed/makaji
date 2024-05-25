@@ -89,6 +89,7 @@ func main() {
 		TX:      tx,
 		Config:  cfg,
 		Elastic: esClient,
+		Redis:   redisConn,
 	})
 
 	recipesUC := recipesUsecase.GetNewRecipesUC(&recipesUsecase.Options{

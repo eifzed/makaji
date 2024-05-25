@@ -5,6 +5,7 @@ import (
 
 	"github.com/eifzed/joona/internal/entity/recipes"
 	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -66,6 +67,21 @@ func (conn *recipesConn) GetRecipes(ctx context.Context, filter recipes.GetRecip
 		result = append(result, recipe)
 	}
 
+	return
+}
+
+func (conn *recipesConn) GetRecipeByID(ctx context.Context, id primitive.ObjectID) (recipe recipes.Recipe, err error) {
+	result := conn.DB.Collection("recipes").FindOne(ctx, bson.M{"_id": id})
+
+	if result.Err() != nil {
+		err = errors.Wrap(result.Err(), "GetRecipeByID.FindOne")
+		return
+	}
+	err = result.Decode(&recipe)
+	if err != nil {
+		err = errors.Wrap(err, "GetRecipeByID.Decode")
+		return
+	}
 	return
 }
 

@@ -117,3 +117,14 @@ type UserItem struct {
 	Nationality    string `json:"nationality"`
 	Bio            string `json:"bio"`
 }
+
+type GenericFilterParams struct {
+	Keyword string `json:"keyword" schema:"keyword"`
+	Limit   uint32 `json:"limit" schema:"limit"`
+	Page    uint32 `json:"page" schema:"page"`
+}
+
+type GetUserListResponse struct {
+	Data  []UserItem `json:"data"`
+	Total int64      `json:"total"`
+}

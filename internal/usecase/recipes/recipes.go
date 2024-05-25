@@ -11,6 +11,7 @@ import (
 	"github.com/eifzed/joona/lib/common"
 	"github.com/eifzed/joona/lib/common/commonerr"
 	"github.com/pkg/errors"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (uc *recipesUC) CreateRecipe(ctx context.Context, params recipes.Recipe) (result recipes.GenericPostResponse, err error) {
@@ -94,8 +95,7 @@ func (uc *recipesUC) UpdateRecipe(ctx context.Context, params recipes.Recipe) (r
 }
 
 const (
-	recipeListKey         = "recipe-list-%s"
-	recipeListCacheSecond = 120
+	recipeListKey = "recipe-list-%s"
 )
 
 func (uc *recipesUC) GetRecipes(ctx context.Context, params recipes.GetRecipeParams) (result recipes.GetRecipeListResponse, err error) {
@@ -129,9 +129,23 @@ func (uc *recipesUC) GetRecipes(ctx context.Context, params recipes.GetRecipePar
 		return
 	}
 
+	recipeListCacheSecond := 120
+	if uc.config.CacheExpire.RecipeListSecond > 0 {
+		recipeListCacheSecond = uc.config.CacheExpire.RecipeListSecond
+	}
+
 	_, err = uc.redis.SetWithExpire(key, string(resultB), recipeListCacheSecond)
 	if err != nil {
 		err = errors.Wrap(err, "redis.SetWithExpire")
+		return
+	}
+	return
+}
+
+func (uc *recipesUC) GetRecipeDetailByID(ctx context.Context, id primitive.ObjectID) (result recipes.Recipe, err error) {
+	result, err = uc.recipesDB.GetRecipeByID(ctx, id)
+	if err != nil {
+		err = errors.Wrap(err, "GetRecipeList")
 		return
 	}
 	return

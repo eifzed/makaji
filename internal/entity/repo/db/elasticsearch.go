@@ -13,4 +13,5 @@ type ElasticsearchInterface interface {
 	UpdateRecipe(ctx context.Context, id string, data *recipes.ReceipeItem) (err error)
 	InsertUser(ctx context.Context, data *users.UserItem) (err error)
 	UpdateUser(ctx context.Context, id string, data *users.UserItem) (err error)
+	GetUserList(ctx context.Context, params users.GenericFilterParams) (result users.GetUserListResponse, err error)
 }

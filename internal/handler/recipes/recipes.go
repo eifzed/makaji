@@ -5,6 +5,8 @@ import (
 
 	"github.com/eifzed/joona/internal/entity/recipes"
 	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/go-chi/chi"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (h *RecipesHandler) CreateRecipe(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +47,25 @@ func (h *RecipesHandler) GetRecipes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result, err := h.RecipesUC.GetRecipes(ctx, params)
+	if err != nil {
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+	commonwriterRespondOKWithData(ctx, w, result)
+}
+
+func (h *RecipesHandler) GetRecipeDetailByID(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	id := chi.URLParam(r, "id")
+
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		err = commonerr.ErrorBadRequest("get_recipe_detail", "invalid id")
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+
+	result, err := h.RecipesUC.GetRecipeDetailByID(ctx, oid)
 	if err != nil {
 		commonwriterRespondError(ctx, w, err)
 		return

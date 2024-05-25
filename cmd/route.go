@@ -23,6 +23,7 @@ func getRoute(m *modules) *chi.Mux {
 				authRoute.Post(usersRoute.URL("/register"), m.httpHandler.UsersHandler.RegisterNewAccount)
 				authRoute.Get(usersRoute.URL("/{id}"), m.httpHandler.UsersHandler.GetUserByID)
 				authRoute.Get(usersRoute.URL("/self"), m.httpHandler.UsersHandler.GetSelfUser)
+				authRoute.Get(usersRoute.URL(""), m.httpHandler.UsersHandler.GetUserList)
 				authRoute.Put(usersRoute.URL("/self"), m.httpHandler.UsersHandler.UpdateSelfUser)
 			})
 
@@ -34,6 +35,7 @@ func getRoute(m *modules) *chi.Mux {
 			path.Group("/recipes", func(recipesRoute urlpath.Routes) {
 				authRoute.Post(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.CreateRecipe)
 				authRoute.Get(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.GetRecipes)
+				authRoute.Get(recipesRoute.URL("/{id}"), m.httpHandler.RecipesHandler.GetRecipeDetailByID)
 			})
 
 			path.Group("/files", func(filesRoute urlpath.Routes) {
