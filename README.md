@@ -1,4 +1,4 @@
-# Joona
+# makaji
 
 This repository is a mock backend service for a recipe browser application where people can find delicious recipes based on the ingredients and tools that they have, food preference, and their cooking mastery level. 
 
@@ -17,12 +17,12 @@ Although the tech stacks seem way too overkill for a mock service, they are chos
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/eifzed/joona.git
+   git clone https://github.com/eifzed/makaji.git
    ```
 
 2. **Navigate to the Project Directory:**
    ```bash
-   cd joona
+   cd makaji
    ```
 
 2. **Setup DB:**
@@ -32,8 +32,8 @@ Although the tech stacks seem way too overkill for a mock service, they are chos
 
 3. **Setup Config File**
     ```bash
-   cp ./files/etc/joona-config/joona-config.development.yaml.example ./files/etc/joona-config/joona-config.development.yaml
-   cp ./files/etc/joona-secret/joona-secret.development.json.example ./files/etc/joona-secret/joona-secret.development.json
+   cp ./files/etc/makaji-config/makaji-config.development.yaml.example ./files/etc/makaji-config/makaji-config.development.yaml
+   cp ./files/etc/makaji-secret/makaji-secret.development.json.example ./files/etc/makaji-secret/makaji-secret.development.json
    ```
 3. **Run Application:**
    ```bash

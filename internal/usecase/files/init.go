@@ -1,8 +1,8 @@
 package files
 
 import (
-	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/repo/external"
+	"github.com/eifzed/makaji/internal/config"
+	"github.com/eifzed/makaji/internal/entity/repo/external"
 )
 
 type fileUC struct {

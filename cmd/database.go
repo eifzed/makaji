@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/eifzed/joona/internal/config"
+	"github.com/eifzed/makaji/internal/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"

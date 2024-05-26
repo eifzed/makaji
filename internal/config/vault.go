@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/eifzed/joona/lib/common"
-	"github.com/eifzed/joona/lib/database/mongodb"
-	"github.com/eifzed/joona/lib/utility/jwt"
+	"github.com/eifzed/makaji/lib/common"
+	"github.com/eifzed/makaji/lib/database/mongodb"
+	"github.com/eifzed/makaji/lib/utility/jwt"
 )
 
 type SecretVault struct {
@@ -42,14 +42,14 @@ type Metadata struct {
 
 func GetSecrets() *SecretVault {
 	env := "production"
-	vaultPath := "/etc/joona-secret/"
+	vaultPath := "/etc/makaji-secret/"
 
 	if common.IsDevelopment() {
 		dir, _ := os.Getwd()
 		env = "development"
-		vaultPath = dir + "/files" + "/etc/joona-secret/"
+		vaultPath = dir + "/files" + "/etc/makaji-secret/"
 	}
-	vaultPath = vaultPath + "joona-secret" + "." + env + ".json"
+	vaultPath = vaultPath + "makaji-secret" + "." + env + ".json"
 	vaultFile, err := os.Open(vaultPath)
 	if err != nil {
 		log.Fatalln("Path fault not found:", err)

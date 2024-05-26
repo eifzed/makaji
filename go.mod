@@ -1,4 +1,4 @@
-module github.com/eifzed/joona
+module github.com/eifzed/makaji
 
 go 1.21
 

@@ -1,10 +1,10 @@
 package users
 
 import (
-	"github.com/eifzed/joona/internal/config"
-	"github.com/eifzed/joona/internal/entity/usecase"
-	"github.com/eifzed/joona/lib/common/commonwriter"
-	"github.com/eifzed/joona/lib/common/handler"
+	"github.com/eifzed/makaji/internal/config"
+	"github.com/eifzed/makaji/internal/entity/usecase"
+	"github.com/eifzed/makaji/lib/common/commonwriter"
+	"github.com/eifzed/makaji/lib/common/handler"
 )
 
 type UsersHandler struct {

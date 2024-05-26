@@ -3,8 +3,8 @@ package recipes
 import (
 	"context"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 )
 
 func (uc *recipesUC) RegisterIngredient(ctx context.Context, params recipes.Ingredient) (err error) {

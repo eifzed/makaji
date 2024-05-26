@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/eifzed/joona/lib/common"
-	"github.com/eifzed/joona/lib/helper/toggle"
-	"github.com/eifzed/joona/lib/utility/jwt"
+	"github.com/eifzed/makaji/lib/common"
+	"github.com/eifzed/makaji/lib/helper/toggle"
+	"github.com/eifzed/makaji/lib/utility/jwt"
 	"github.com/prometheus/common/log"
 	"gopkg.in/yaml.v2"
 )
@@ -35,7 +35,7 @@ type Config struct {
 	PublicRoutes []string                  `yaml:"public_routes"`
 	File         FileConfig                `yaml:"file"`
 	Redis        Redis                     `yaml:"redis"`
-	CacheExpire  CacheExpire               `yaml:"redis_expire"`
+	CacheExpire  CacheExpire               `yaml:"cache_expire"`
 }
 
 type CacheExpire struct {
@@ -76,8 +76,8 @@ func GetConfig() (*Config, error) {
 		pathBase = filepath.Join(dir, "files")
 
 	}
-	fileName := fmt.Sprintf("%s.%s.yaml", "joona-config", env)
-	filePath := filepath.Join(pathBase, "/etc/joona-config", fileName)
+	fileName := fmt.Sprintf("%s.%s.yaml", "makaji-config", env)
+	filePath := filepath.Join(pathBase, "/etc/makaji-config", fileName)
 	log.Infoln("reading config file from: ", filePath)
 
 	f, err := os.Open(filePath)

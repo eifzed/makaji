@@ -19,7 +19,7 @@ jobs:
           go-version: '1.21'
       
       - name: Build
-        run: go build -o joona ./cmd/
+        run: go build -o makaji ./cmd/
 
       - name: Run Unit Tests
         run: go test ./...
@@ -32,11 +32,11 @@ jobs:
           key: ${{ secrets.AZURE_SSH }}
           script: |
             set -e
-            cd /home/eifzed/joona
+            cd /home/eifzed/makaji
             git checkout release
             git pull
-            /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o joona ./cmd/
-            sudo systemctl stop joona.service
-            sudo cp ./joona /usr/bin
-            sudo cp -R ./files/etc/joona-config/* /etc/joona-config
-            sudo systemctl start joona.service
+            /usr/local/go/bin/go build -ldflags "-X main.CommitHash=$(git rev-parse --short HEAD)" -o makaji ./cmd/
+            sudo systemctl stop makaji.service
+            sudo cp ./makaji /usr/bin
+            sudo cp -R ./files/etc/makaji-config/* /etc/makaji-config
+            sudo systemctl start makaji.service

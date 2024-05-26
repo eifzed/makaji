@@ -3,7 +3,7 @@ package recipes
 import (
 	"errors"
 
-	"github.com/eifzed/joona/lib/database/mongodb/transactions"
+	"github.com/eifzed/makaji/lib/database/mongodb/transactions"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

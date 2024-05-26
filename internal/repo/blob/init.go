@@ -5,7 +5,7 @@ import (
 	"net/url"
 
 	"github.com/Azure/azure-storage-blob-go/azblob"
-	"github.com/eifzed/joona/internal/config"
+	"github.com/eifzed/makaji/internal/config"
 	"github.com/pkg/errors"
 )
 

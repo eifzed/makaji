@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Azure/azure-storage-blob-go/azblob"
-	"github.com/eifzed/joona/internal/entity/files"
+	"github.com/eifzed/makaji/internal/entity/files"
 	"github.com/pkg/errors"
 )
 

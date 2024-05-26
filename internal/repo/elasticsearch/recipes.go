@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
+	"github.com/eifzed/makaji/internal/entity/recipes"
 	"github.com/elastic/go-elasticsearch/v8/typedapi/core/search"
 	"github.com/pkg/errors"
 )

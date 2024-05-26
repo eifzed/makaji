@@ -10,6 +10,6 @@ RUN go mod download
 ENV ISLOCAL="1"
 # RUN go get github.com/zimbatm/socketmaster 
 EXPOSE 10004
-RUN go build -o joona /app/cmd/
+RUN go build -o makaji /app/cmd/
 
-CMD ["/app/joona"]
+CMD ["/app/makaji"]

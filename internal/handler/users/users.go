@@ -3,9 +3,9 @@ package users
 import (
 	"net/http"
 
-	"github.com/eifzed/joona/internal/entity/users"
-	"github.com/eifzed/joona/internal/handler/auth"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/entity/users"
+	"github.com/eifzed/makaji/internal/handler/auth"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/go-chi/chi"
 	"github.com/leebenson/conform"
 	"go.mongodb.org/mongo-driver/bson/primitive"

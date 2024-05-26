@@ -6,16 +6,16 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/eifzed/joona/lib/common"
-	"github.com/eifzed/joona/lib/utility/hash"
-	"github.com/eifzed/joona/lib/utility/jwt"
+	"github.com/eifzed/makaji/lib/common"
+	"github.com/eifzed/makaji/lib/utility/hash"
+	"github.com/eifzed/makaji/lib/utility/jwt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/eifzed/joona/internal/constant"
-	"github.com/eifzed/joona/internal/entity/users"
-	"github.com/eifzed/joona/internal/handler/auth"
-	"github.com/eifzed/joona/internal/repo/redis"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/constant"
+	"github.com/eifzed/makaji/internal/entity/users"
+	"github.com/eifzed/makaji/internal/handler/auth"
+	"github.com/eifzed/makaji/internal/repo/redis"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/pkg/errors"
 )
 

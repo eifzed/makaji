@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/pkg/errors"
 )
 

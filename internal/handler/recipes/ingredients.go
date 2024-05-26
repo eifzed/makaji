@@ -3,8 +3,8 @@ package recipes
 import (
 	"net/http"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 )
 
 func (h *RecipesHandler) RegisterIngredients(w http.ResponseWriter, r *http.Request) {

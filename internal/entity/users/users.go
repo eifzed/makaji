@@ -6,7 +6,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

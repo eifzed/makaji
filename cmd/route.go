@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	// "github.com/eifzed/joona/lib/utility/urlpath"
-	"github.com/eifzed/joona/lib/utility/urlpath"
+	// "github.com/eifzed/makaji/lib/utility/urlpath"
+	"github.com/eifzed/makaji/lib/utility/urlpath"
 	"github.com/go-chi/chi"
 )
 

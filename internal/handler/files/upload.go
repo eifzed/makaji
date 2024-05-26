@@ -6,10 +6,10 @@ import (
 	"mime/multipart"
 	"net/http"
 
-	"github.com/eifzed/joona/internal/constant"
-	"github.com/eifzed/joona/internal/entity/files"
-	"github.com/eifzed/joona/lib/common"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/constant"
+	"github.com/eifzed/makaji/internal/entity/files"
+	"github.com/eifzed/makaji/lib/common"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/pkg/errors"
 )
 

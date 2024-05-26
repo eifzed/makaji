@@ -1,5 +1,5 @@
 server:
-  name: "joona"
+  name: "makaji"
   http:
     address: ":10004"
   debug: 1

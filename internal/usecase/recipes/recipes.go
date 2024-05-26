@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/eifzed/joona/internal/entity/recipes"
-	"github.com/eifzed/joona/internal/handler/auth"
-	"github.com/eifzed/joona/internal/repo/redis"
-	"github.com/eifzed/joona/lib/common"
-	"github.com/eifzed/joona/lib/common/commonerr"
+	"github.com/eifzed/makaji/internal/entity/recipes"
+	"github.com/eifzed/makaji/internal/handler/auth"
+	"github.com/eifzed/makaji/internal/repo/redis"
+	"github.com/eifzed/makaji/lib/common"
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
