@@ -1,7 +1,9 @@
 package recipes
 
 import (
+	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/volatiletech/null/v8"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type GetRecipeParams struct {
@@ -37,11 +39,13 @@ type Recipe struct {
 	Tools             []string           `json:"tools" bson:"tools"`
 	Ingredients       []RecipeIngredient `json:"ingredients" bson:"ingredients"`
 	Steps             []StepGroup        `json:"steps" bson:"steps"`
-	CreatorID         string             `json:"creator_id"`
+	CreatorID         primitive.ObjectID `json:"creator_id"`
 }
 
 func (r *Recipe) ValidateInput() error {
-	// TODO
+	if r.Name == "" || r.Content == "" || len(r.Ingredients) == 0 {
+		return commonerr.ErrorBadRequest("recipe", "recipe name, content, and ingredients cannot be empty")
+	}
 	return nil
 }
 

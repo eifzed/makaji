@@ -31,6 +31,37 @@ func (h *RecipesHandler) CreateRecipe(w http.ResponseWriter, r *http.Request) {
 	commonwriterRespondOKWithData(ctx, w, result)
 }
 
+func (h *RecipesHandler) UpdateRecipe(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	recipe := recipes.Recipe{}
+	err := bindingBind(r, &recipe)
+	if err != nil {
+		err = commonerr.ErrorBadRequest("invalid_params", "invalid params")
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+	if err := recipe.ValidateInput(); err != nil {
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+
+	id := chi.URLParam(r, "id")
+
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		err = commonerr.InvalidObjectID
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+
+	result, err := h.RecipesUC.UpdateRecipe(ctx, oid, recipe)
+	if err != nil {
+		commonwriterRespondError(ctx, w, err)
+		return
+	}
+	commonwriterRespondOKWithData(ctx, w, result)
+}
+
 func (h *RecipesHandler) GetRecipes(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	params := recipes.GetRecipeParams{

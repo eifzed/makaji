@@ -15,6 +15,6 @@ type RecipesDBInterface interface {
 	// recipes
 	InsertRecipe(ctx context.Context, recipe *recipes.Recipe) error
 	GetRecipes(ctx context.Context, filter recipes.GetRecipeParams) (result []recipes.Recipe, err error)
-	UpdateRecipeByID(ctx context.Context, id string, recipe *recipes.Recipe) error
+	UpdateRecipeByID(ctx context.Context, id primitive.ObjectID, recipe *recipes.Recipe) error
 	GetRecipeByID(ctx context.Context, id primitive.ObjectID) (recipe recipes.Recipe, err error)
 }
