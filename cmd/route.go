@@ -34,6 +34,7 @@ func getRoute(m *modules) *chi.Mux {
 
 			path.Group("/recipes", func(recipesRoute urlpath.Routes) {
 				authRoute.Post(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.CreateRecipe)
+				authRoute.Put(recipesRoute.URL("/id"), m.httpHandler.RecipesHandler.UpdateRecipe)
 				authRoute.Get(recipesRoute.URL("/"), m.httpHandler.RecipesHandler.GetRecipes)
 				authRoute.Get(recipesRoute.URL("/{id}"), m.httpHandler.RecipesHandler.GetRecipeDetailByID)
 			})

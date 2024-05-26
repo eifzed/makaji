@@ -20,7 +20,13 @@ func (uc *recipesUC) CreateRecipe(ctx context.Context, params recipes.Recipe) (r
 		err = commonerr.ErrorUnauthorized("you need to be logged in to post a recipe")
 		return
 	}
-	params.CreatorID = user.UserID
+	oid, err := primitive.ObjectIDFromHex(user.UserID)
+	if err != nil {
+		err = commonerr.ErrorBadRequest("create_recipe", "invalid user id")
+		return
+	}
+
+	params.CreatorID = oid
 
 	ctx, err = uc.tx.Start(ctx)
 	defer uc.tx.Finish(ctx, &err)
@@ -54,23 +60,37 @@ func (uc *recipesUC) CreateRecipe(ctx context.Context, params recipes.Recipe) (r
 	return
 }
 
-func (uc *recipesUC) UpdateRecipe(ctx context.Context, params recipes.Recipe) (result recipes.GenericPostResponse, err error) {
+func (uc *recipesUC) UpdateRecipe(ctx context.Context, recipeID primitive.ObjectID, params recipes.Recipe) (result recipes.GenericPostResponse, err error) {
 	user, exist := auth.GetUserDetailFromContext(ctx)
 	if !exist {
 		err = commonerr.ErrorUnauthorized("you need to be logged in to edit a recipe")
 		return
 	}
-	params.CreatorID = user.UserID
+	oid, err := primitive.ObjectIDFromHex(user.UserID)
+	if err != nil {
+		err = commonerr.ErrorBadRequest("update_recipe", "invalid user id")
+		return
+	}
 
+	recipe, err := uc.recipesDB.GetRecipeByID(ctx, recipeID)
+	if err != nil {
+		err = errors.Wrap(err, "recipesDB.GetRecipeByID")
+		return
+	}
+	if recipe.CreatorID.Hex() != user.UserID {
+		err = commonerr.ErrorUnauthorized("you are not the creator of this recipe")
+		return
+	}
+
+	params.CreatorID = oid
 	ctx, err = uc.tx.Start(ctx)
 	defer uc.tx.Finish(ctx, &err)
 
-	err = uc.recipesDB.UpdateRecipeByID(ctx, params.ID, &params)
+	err = uc.recipesDB.UpdateRecipeByID(ctx, recipeID, &params)
 	if err != nil {
 		err = errors.Wrap(err, "recipesDB.UpdateRecipeByID")
 		return
 	}
-	result.ID = params.ID
 	err = uc.elastic.UpdateRecipe(ctx, params.ID, &recipes.ReceipeItem{
 		ID:                params.ID,
 		Name:              params.Name,
@@ -90,6 +110,7 @@ func (uc *recipesUC) UpdateRecipe(ctx context.Context, params recipes.Recipe) (r
 		err = errors.Wrap(err, "elastic.UpdateRecipe")
 		return
 	}
+	result.ID = recipe.ID
 
 	return
 }

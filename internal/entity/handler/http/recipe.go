@@ -9,6 +9,7 @@ type RecipesHandler interface {
 
 	// recipes
 	CreateRecipe(w http.ResponseWriter, r *http.Request)
+	UpdateRecipe(w http.ResponseWriter, r *http.Request)
 	GetRecipes(w http.ResponseWriter, r *http.Request)
 	GetRecipeDetailByID(w http.ResponseWriter, r *http.Request)
 }

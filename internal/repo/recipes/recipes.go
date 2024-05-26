@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/eifzed/makaji/internal/entity/recipes"
-	"github.com/eifzed/makaji/lib/common/commonerr"
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -108,7 +107,7 @@ func (conn *recipesConn) InsertRecipe(ctx context.Context, recipe *recipes.Recip
 	return nil
 }
 
-func (conn *recipesConn) UpdateRecipeByID(ctx context.Context, id string, recipe *recipes.Recipe) error {
+func (conn *recipesConn) UpdateRecipeByID(ctx context.Context, id primitive.ObjectID, recipe *recipes.Recipe) error {
 	session := getSessionFromContext(ctx)
 
 	err := mongo.WithSession(ctx, session, func(sc mongo.SessionContext) error {
@@ -118,12 +117,8 @@ func (conn *recipesConn) UpdateRecipeByID(ctx context.Context, id string, recipe
 		} else {
 			collection = conn.DB.Collection("recipes")
 		}
-		oid, err := primitive.ObjectIDFromHex(id)
-		if err != nil {
-			return commonerr.InvalidObjectID
-		}
 
-		result, err := collection.UpdateByID(ctx, oid, recipe)
+		result, err := collection.UpdateByID(ctx, id, recipe)
 		if err != nil {
 			return err
 		}
